@@ -1,8 +1,16 @@
 import { ctx, canvas } from './canvas';
 import mouse from './events';
+
 import Scene from './Controllers/Scene';
+import CircleTest from './Assets/Custom/CircleTest';
 
+var s1 = new Scene("s1", [], 30, 4000)
+s1.set_in(100);
 
+console.log(s1);
+
+var circ = new CircleTest("circ1", 90, s1.num_frames) 
+s1.add_asset(circ)
 
 
 function draw() {
@@ -15,10 +23,16 @@ function draw() {
       ctx.fillRect(30, 30, 50, 50);
 }
 
+var i=0;
 function animate(time) {
-
+    s1.timeline(i);
+    i++;
     requestAnimationFrame(animate)
 }
 
-draw();
+// draw();
+// window.setTimeout(()=> {
+//     console.log("start")
+//     animate();
+// }, 2000)
 // animate();

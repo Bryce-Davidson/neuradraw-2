@@ -1,15 +1,27 @@
+import AssetController from './AssetController';
+
 export default class Scene {
     /**
      * 
      * @param {String} name - the name of the scene
-     * @param {Array} assets - the array of assets in the scene
+     * @param {[AssetController]} assets - the array of assets in the scene
      * @param {Number} fps - The frames per second for the scene 
-     * @param {*} duration - The duration of the scene in miliseconds (100 miliseconds = 1 second)
+     * @param {*} duration - The duration of the scene in miliseconds (1000 miliseconds = 1 second)
      */
     constructor(name, assets, fps, duration) {
         this.name = name;
         this.assets = assets;
-        this.num_frames = Math.round(Fps * duration/1000);
+        this.fps = fps;
+        this.duration = duration;
+        
+        this.num_frames = Math.round(fps * duration/1000);
+        this.frameIn;
+        this.frameOut;
+    }
+
+    set_in(frameIn) {
+        this.frameIn = frameIn;
+        this.frameOut = this.frameIn + Math.round(this.fps * this.duration/1000);
     }
 
     /**
@@ -17,20 +29,28 @@ export default class Scene {
      * @param {Number} frame - The current frame of the animation timeline
      */
     timeline(frame) {
-        // loop through the assets and give them a frame
-        for(var i=0; i < this.assets.length; i++) {
-            // if the timeline frame stops the asset should stop drawing
-            // seems the timeline should only really trigger the drawing function
-            // if there has been a change
-            this.assets[i].timeline(frame);
+        if((frame >= this.frameIn && frame <= this.frameOut)) {
+            for(var i=0; i < this.assets.length; i++) {
+                this.assets[i].timeline(frame - this.frameIn);
+            }
         }
+        
     }
 
     /**
      * 
-     * @param {Asset} asset - The drawing asset to be added to the scene
+     * @param {AssetController} asset - The drawing asset to be added to the scene
      */
     add_asset(asset) {
+        // if the asset out is past the duration of the scene then warning
+        // get duration of asset
+        if(asset.frameOut > this.frameOut) {
+            console.warn(
+                `
+                    Asset: ${asset.name} is clipping the end of the scene \n 
+                    Please change asset.frameOut to be less than scene.frameOut
+                `)
+        }
         this.assets.push(asset);
     }
 }
