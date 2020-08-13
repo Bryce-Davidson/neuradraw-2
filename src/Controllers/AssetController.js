@@ -7,6 +7,14 @@ export default class AssetController {
         this.state = {};
         this.state.num_draws = 0;
     }
+
+    draw(new_config) {
+        if(this.has_changed(new_config)) {
+            this.update_config(new_config);
+            if(typeof this.compute === "function")
+                this.compute(this.get_compute_keys());
+        }
+    }
     
     /**
      * 
@@ -19,12 +27,12 @@ export default class AssetController {
         }
     }
 
+    // add in the lodash module
     has_changed(new_config) {
-        var is_equal = true;
-        return !is_equal;
+        return true;
     }
 
     get_compute_keys() {
-
+        return ["list", "of", "keys"]
     }
 }

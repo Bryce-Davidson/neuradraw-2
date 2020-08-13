@@ -17,24 +17,23 @@ export default class CircleBasic extends AssetController {
         })
     }
 
-    // NEEDS
-    compute(compute_keys) {
-        // computes the necessary information for drawing
-        // should a key come through, compute the necessary information
-    }
+    // computes the necessary information for drawing
+    // should a key come through, compute the necessary information
+    // console.log(compute_keys)
+
+    // OPTIONAL - Doesn't need to do anything
+    // compute(stuff){
+    //     console.log(stuff)
+    // };
 
     // NEEDS
     draw(new_config) {
-        // NEEDS THIS CODE
-        if(new_config)
-            this.update_config(new_config);
-        if(this.has_changed(new_config))
-            this.compute(this.get_compute_keys(new_config));
-        
-        // CALL DRAWING FUNCTIONS HERE  
+        // NEEDS to call super.draw(new_config)
+        super.draw(new_config);
         this._draw_circle();
     }
 
+    // Any drawing commands needs to reference the config and the state object
     _draw_circle() {
         push();
         stroke(this.config.stroke);
