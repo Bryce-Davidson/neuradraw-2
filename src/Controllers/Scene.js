@@ -1,4 +1,4 @@
-import AssetController from './AssetController';
+import AssetController from './AnimationController';
 
 export default class Scene {
     /**
@@ -9,6 +9,10 @@ export default class Scene {
      * @param {*} duration - The duration of the scene in miliseconds (1000 miliseconds = 1 second)
      */
     constructor(name, assets, fps, duration) {
+
+        // this is stuff you need to enforce with typescript
+        // look into typescritpt
+
         this.name = name;
         this.assets = assets;
         this.fps = fps;
