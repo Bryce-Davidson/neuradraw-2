@@ -9,7 +9,7 @@ s1.set_in(100);
 
 console.log(s1);
 
-var circ = new CircleTest("circ1", 90, s1.num_frames) 
+var circ = new CircleTest("circ1", 0, 250) 
 s1.add_asset(circ)
 
 

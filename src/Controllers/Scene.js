@@ -29,12 +29,12 @@ export default class Scene {
      * @param {Number} frame - The current frame of the animation timeline
      */
     timeline(frame) {
+        // make sure to call the asset timelines relative to the scene
         if((frame >= this.frameIn && frame <= this.frameOut)) {
             for(var i=0; i < this.assets.length; i++) {
                 this.assets[i].timeline(frame - this.frameIn);
             }
         }
-        
     }
 
     /**
@@ -48,7 +48,8 @@ export default class Scene {
             console.warn(
                 `
                     Asset: ${asset.name} is clipping the end of the scene \n 
-                    Please change asset.frameOut to be less than scene.frameOut
+                    Please change ${asset.name}.frameOut to be \n
+                    less than or equal to ${this.name}.frameOut
                 `)
         }
         this.assets.push(asset);

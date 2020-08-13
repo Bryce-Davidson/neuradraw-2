@@ -4,7 +4,10 @@ export default class AssetController {
      * @param {Number} frameIn - The frame to begin drawing on relative to a scene
      * @param {Number} frameOut - The frame to stop drawing on relative to a scene
      */
-    constructor(frameIn, frameOut) {
+    constructor(name, frameIn, frameOut) {
+        if(frameIn==undefined || frameOut==undefined)
+            throw new Error(`Please provide a frameIn and a frameOut for \"${name}\"`);
+        this.name = name;
         this.drawing_config;
         this.state = {};
         this.frameIn = frameIn;
@@ -12,8 +15,9 @@ export default class AssetController {
         this.state.num_draws = 0;
     }
 
-
-    timeline() {}
+    timeline(frame) {
+        console.log(frame);
+    };
 
     /**
      * 
