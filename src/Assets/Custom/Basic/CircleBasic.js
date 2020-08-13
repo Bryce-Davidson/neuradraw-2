@@ -4,6 +4,8 @@ import fill from '../../../Controllers/Context/Cosmetic/Fill';
 import {push, pop} from '../../../Controllers/Context/State';
 import AssetController from '../../../Controllers/AssetController';
 
+// I want to implement as little as possible here... and as much as possible in the AssetController
+
 export default class CircleBasic extends AssetController {
     constructor(name) {
         super(name, {
@@ -15,15 +17,29 @@ export default class CircleBasic extends AssetController {
         })
     }
 
-    compile(compile_keys) {
-
+    // NEEDS
+    compute(compute_keys) {
+        // computes the necessary information for drawing
+        // should a key come through, compute the necessary information
     }
 
-    draw() {
+    // NEEDS
+    draw(new_config) {
+        // NEEDS THIS CODE
+        if(new_config)
+            this.update_config(new_config);
+        if(this.has_changed(new_config))
+            this.compute(this.get_compute_keys(new_config));
+        
+        // CALL DRAWING FUNCTIONS HERE  
+        this._draw_circle();
+    }
+
+    _draw_circle() {
         push();
-        stroke(this.drawing_config.stroke);
-        fill(this.drawing_config.fill);
-        circle(this.drawing_config.x, this.drawing_config.y, this.drawing_config.radius);
+        stroke(this.config.stroke);
+        fill(this.config.fill);
+        circle(this.config.x, this.config.y, this.config.radius);
         pop();
     }
 }

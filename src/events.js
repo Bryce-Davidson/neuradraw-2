@@ -1,6 +1,6 @@
 import { canvas } from './canvas';
 
-export var mouse = {}
+var mouse = {}
 addEventListener('mousemove', (event) => {
     mouse.x = event.clientX
     mouse.y = event.clientY
@@ -12,3 +12,5 @@ addEventListener('resize', () => {
     canvas.height = innerHeight
     // console.log(innerWidth, innerHeight)
 })
+
+export default mouse;
