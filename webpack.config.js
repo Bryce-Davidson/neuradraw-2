@@ -9,7 +9,7 @@ module.exports = {
     // watch: true,
     devServer: {
         contentBase: './dist',
-        clientLogLevel: 'error',
+        clientLogLevel: 'info',
         port: 8080
     },
     plugins: [

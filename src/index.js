@@ -1,18 +1,24 @@
-// const {c, canvas} = require('./canvas');
 import { ctx, canvas } from './canvas';
-import mouse from './meta';
+import mouse from './events';
+import Scene from './Controllers/Scene';
 
-addEventListener('resize', () => {
-    canvas.width = innerWidth
-    canvas.height = innerHeight
-    // console.log(innerWidth, innerHeight)
-})
 
-function animate() {
-    requestAnimationFrame(animate)
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-  
-    ctx.fillText('HTML CANVAS BOILERPLATE', mouse.x, mouse.y)
+
+
+function draw() {
+      var ctx = canvas.getContext('2d');
+
+      ctx.fillStyle = 'rgb(200, 0, 0)';
+      ctx.fillRect(10, 10, 50, 50);
+
+      ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
+      ctx.fillRect(30, 30, 50, 50);
 }
 
-animate();
+function animate(time) {
+
+    requestAnimationFrame(animate)
+}
+
+draw();
+// animate();
