@@ -1,71 +1,39 @@
+import { push, pop } from '../../Controllers/Context/State';
+import stroke from '../../Controllers/Context/Cosmetic/stroke';
+import fill from '../../Controllers/Context/Cosmetic/fill';
+import circle from '../../Assets/Primitives/Circle';
+import stroke_weight from '../../Controllers/Context/Cosmetic/stroke_weight';
+
+import includes_any from '../../Utility/includes_any';
 
 
+import AssetController from '../../Controllers/AssetController';
 
-class DNN {
-
-    /**
-     * 
-     * @param {String} name - the name of the instance
-     */
-    constructor(name) {
-        this.name = name;
-        this.drawing_config = {};
-        this.state = {};
-        this.__num_draws = 0;
-
-        this.state.layer_configs = []
-        this.state.edges = [];
+export default class DNN extends AssetController {
+    constructor(name, default_config) {
+        super(name, default_config);
+        
+        this.save("layer_configs", [])
+        this.save("edges", [])
     }
 
-    draw({
-            x=0, 
-            y=0, 
-            diameter=60,
-            layer_spacing=120,
-            node_spacing=60,
-            weight_colors=0,
-            weight_thicknesses=0.3
-        }={}) {
-
-        const new_config = {
-            x,
-            y,
-            diameter,
-            layer_spacing,
-            node_spacing,
-            weight_colors,
-            weight_thicknesses
-        }
-
-        if(!arguments[0])
-            throw new Error("Please provide a drawing configuration object.")
-
-        if(this.__num_draws==0) {
-            this.__update_drawing_config(new_config);
-            this.compile(Object.keys(new_config));
-        }
-        else if(this.__has_changed(new_config)) {
-            let compile_keys = this.__get_updated_configurations(arguments[0]);
-            this.__update_drawing_config(new_config);
-            this.compile(compile_keys);
-        }
+    draw(new_config) {
+        super.update(new_config);
 
         this._draw_edges();
         this._draw_nodes() ;
         this._draw_annotations();
-
-        this.__num_draws++;
     }
 
-    compile(compile_keys) {
-        if(utility.includes_any(compile_keys, ["x", "y", "layer_spacing", "node_spacing"])) {
-            this.__compile_node_coordinates();
-            this.__compile_edge_coordinates();
+    compute(compute_keys) {
+        if(includes_any(compute_keys, ["x", "y", "layer_spacing", "node_spacing"])) {
+            this.__compute_node_coordinates();
+            this.__compute_edge_coordinates();
         }
-        if(compile_keys.includes("weight_colors"))
-            this.__compile_edge_colors();
-        if(compile_keys.includes("weight_thicknesses"))
-            this.__compile_edge_thicknesses();
+        if(compute_keys.includes("weight_colors"))
+            this.__compute_edge_colors();
+        if(compute_keys.includes("weight_thicknesses"))
+            this.__compute_edge_thicknesses();
     }
 
     __update_drawing_config(updated_config) {
@@ -84,7 +52,7 @@ class DNN {
         this.state.layer_configs.push(new_layer);
     }
 
-    __compile_node_coordinates() {
+    __compute_node_coordinates() {
         const {x, y, diameter, layer_spacing, node_spacing} = this.drawing_config;
 
         const vertical_spacing = diameter + node_spacing
@@ -110,7 +78,7 @@ class DNN {
         }
     }
 
-    __compile_edge_coordinates() {
+    __compute_edge_coordinates() {
         var cur_edge_idx = 0;
         for(var i=0; i < this.state.layer_configs.length - 1; i++) {
             var cur_layer = this.state.layer_configs[i];
@@ -138,7 +106,7 @@ class DNN {
         }
     }
 
-    __compile_edge_colors() {
+    __compute_edge_colors() {
         const { weight_colors } = this.drawing_config;
         const EDGE_COLOR_IDX = 4;
         
@@ -152,7 +120,7 @@ class DNN {
         }
     }
 
-    __compile_edge_thicknesses() {
+    __compute_edge_thicknesses() {
         const { weight_thicknesses } = this.drawing_config;   
         const EDGE_THICKNESS_IDX = 5;
         for(var i=0; i < this.state.edges.length; i++) {
@@ -162,10 +130,6 @@ class DNN {
             else
                 this.state.edges[i].push(thickness)
         }
-    }
-
-    __compile_layer_annotations() {
-
     }
 
     _draw_edges() {
@@ -178,11 +142,11 @@ class DNN {
 
         for(var i=0; i < this.state.edges.length; i++) {
             let e = this.state.edges[i];
-            // push();
-            // stroke(e[COLOR_IDK]);
-            // strokeWeight(e[EDGE_THICKNESS_IDX]);
-            // line(e[X_1_IDX], e[Y_1_IDX], e[X_2_IDX], e[Y_2_IDX])
-            // pop();
+            push();
+            stroke(e[COLOR_IDK]);
+            stroke_weight(e[EDGE_THICKNESS_IDX]);
+            line(e[X_1_IDX], e[Y_1_IDX], e[X_2_IDX], e[Y_2_IDX])
+            pop();
         }
     }
 
@@ -191,33 +155,13 @@ class DNN {
             var cur_layer = this.state.layer_configs[i];
             for(var j=0; j < cur_layer.size; j++) {
                 var cur_node = this.state[cur_layer.name].node_coords[j];
-                // push()
-                // fill(cur_layer.color)
-                // stroke(cur_layer.color)
-                // circle(cur_node[0], cur_node[1], this.drawing_config.diameter);
-                // pop();
+                push()
+                fill(cur_layer.color)
+                stroke(cur_layer.color)
+                circle(cur_node[0], cur_node[1], this.drawing_config.diameter);
+                pop();
             }
         }
-    }
-
-    _draw_annotations() {
-
-    }
-
-    
-    __has_changed(new_config) {
-        var is_equal = _.isEqual(this.drawing_config, new_config);
-        return !is_equal;
-    }
-
-    __get_updated_configurations(new_config) {
-        // return the keys that are different from the configuration object
-        var compile_keys = [];
-        const keys = Object.keys(new_config);
-        for(var i=0; i < keys.length; i++)
-            if(!_.isEqual(new_config[keys[i]], this.drawing_config[keys[i]]))
-                compile_keys.push(keys[i]);
-        return compile_keys;
     }
     
     get num_edges() {
@@ -246,5 +190,3 @@ class DNNLayer {
         this.annotations = annotations;
     }
 }
-
-export default DNN;

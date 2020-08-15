@@ -13,6 +13,8 @@ __compute_function();
 
 You can create your own custom asset from scratch and extend one of the many contrllers to get it up and running
 
+state is readable as an object but should be saved with the function
+
 ```javascript
 // A simple basic contrlled asset
 
@@ -21,13 +23,14 @@ import AssetController from 'neuradraw-2';
 export default class CircleBasic extends AssetController {
     // Each asset must have a name and a default drawing config
     constructor(name) {
-        super(name, {
+        var default_config = {
             x:100,
             y:100,
             radius: 45,
             fill: 'red',
             stroke: 'black'
-        })
+        }
+        super(name, default_config)
     }
 
     // OPTIONAL
@@ -37,18 +40,21 @@ export default class CircleBasic extends AssetController {
         var some_state = {
             person: "James"
         }
-        this.save("state_reference", some_state)
+        this.save("state_name", some_state)
     };
 
     // REQUIRED
     draw(new_config) {
-        // The main draw functinon in the class needs to call super.draw(new_config) 
-        super.draw(new_config);
+        // The main draw functinon in the class needs to call super.update(new_config) 
+        super.update(new_config);
         // After and only after should the internal drawing functions be called
+        // Drawing functions should be called from back to front to structure the
+        // painting of the asset
         this._draw_circle();
     }
 
-    // All class based drawing commands need to reference from the this.drawing_config object.
+    // All class based drawing commands need to reference from the this.config object.
+    // And the this.state object.
     _draw_circle() {
         push();
         stroke(this.config.stroke);

@@ -1,22 +1,23 @@
-
+import isEqual from 'lodash.isequal';
 export default class AssetController {
     constructor(name, default_config) {
-        // enforce default config with typescript
+        // enforce default config with typescript somehow
         this.name = name;
         this.config = default_config;
+        this.default = default_config;
         this.state = {};
         this.state.num_draws = 0;
     }
 
-    draw(new_config) {
-        if(this.has_changed(new_config)) {
-            // Update the config with the new_config
-            this.update_config(new_config);
-            // If there is a compute function available in the instance
-            // call the compute function
-            if(typeof this.compute === "function")
-                this.compute(this.get_compute_keys());
+    update(new_config) {
+        if(new_config) {
+            if(this.has_changed(new_config)) {
+                this.update_config(new_config);
+                if(typeof this.compute === "function")
+                    this.compute(this.get_compute_keys());
+            }
         }
+        this.state.num_draws++;
     }
     
     /**
@@ -34,12 +35,17 @@ export default class AssetController {
         this.state[state_name] = state;
     }
 
-    // add in the lodash module
     has_changed(new_config) {
-        return true;
+        var is_equal = isEqual(this.drawing_config, new_config);
+        return !is_equal;
     }
 
-    get_compute_keys() {
-        return ["list", "of", "keys"]
+    get_compute_keys(new_config) {
+        var compute_keys = [];
+        const keys = Object.keys(new_config);
+        for(var i=0; i < keys.length; i++)
+            if(!isEqual(new_config[keys[i]], this.drawing_config[keys[i]]))
+                compute_keys.push(keys[i]);
+        return compute_keys;
     }
 }
