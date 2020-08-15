@@ -4,7 +4,7 @@ import mouse from './events';
 import CircleBasic from './Assets/Custom/Basic/CircleBasic';
 import CircelControlled from './Assets/Custom/Controlled/CircleControlled';
 
-// var circ = new CircleBasic("circ")
+var circ = new CircleBasic("circ")
 
 var circ = new CircelControlled("circ", 0, 100)
 circ.grow("x", "linear", 0, 100)
@@ -17,7 +17,7 @@ function draw() {
 var i=0;
 function animate(time) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+    // circ.draw()
 
     // for(var j =0; j <= 5; j++) {
     //     circ.draw({
@@ -30,5 +30,5 @@ function animate(time) {
     requestAnimationFrame(animate)
 }
 
-draw();
+// draw();
 // animate();

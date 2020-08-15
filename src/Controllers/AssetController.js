@@ -10,7 +10,10 @@ export default class AssetController {
 
     draw(new_config) {
         if(this.has_changed(new_config)) {
+            // Update the config with the new_config
             this.update_config(new_config);
+            // If there is a compute function available in the instance
+            // call the compute function
             if(typeof this.compute === "function")
                 this.compute(this.get_compute_keys());
         }
@@ -25,6 +28,10 @@ export default class AssetController {
             ...this.config,
             ...new_config
         }
+    }
+
+    save(state_name, state) {
+        this.state[state_name] = state;
     }
 
     // add in the lodash module
