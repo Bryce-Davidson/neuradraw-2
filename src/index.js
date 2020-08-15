@@ -5,20 +5,14 @@ import stroke from './Controllers/Context/Cosmetic/stroke';
 import { push, pop } from './Controllers/Context/State';
 
 
-import CircleBasic from './Assets/Custom/Basic/CircleBasic';
-import CircelControlled from './Assets/Custom/Controlled/CircleControlled';
 
-var circ = new CircleBasic("circ", {
-    x: 0,
-    y: 100,
-    radius: 45,
-    fill: 'red',
-    stroke: 'black'
+// import CircleBasic from './Assets/Custom/Basic/CircleBasic';
+// import CircelControlled from './Assets/Custom/Controlled/CircleControlled';
+import DNN from './Assets/Custom/DNN';
+
+var nn = new DNN("dnn1", {
+    
 })
-
-// var circ = new CircelControlled("circ", 0, 100)
-// circ.grow("x", "linear", 0, 100)
-// console.log(circ);
 
 function setup() {
     // circ.draw()

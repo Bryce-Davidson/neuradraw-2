@@ -1,7 +1,8 @@
 import { push, pop } from '../../Controllers/Context/State';
-import stroke from '../../Controllers/Context/Cosmetic/stroke';
-import fill from '../../Controllers/Context/Cosmetic/fill';
 import circle from '../../Assets/Primitives/Circle';
+import line from '../Primitives/Line';
+import fill from '../../Controllers/Context/Cosmetic/fill';
+import stroke from '../../Controllers/Context/Cosmetic/stroke';
 import stroke_weight from '../../Controllers/Context/Cosmetic/stroke_weight';
 
 import includes_any from '../../Utility/includes_any';
@@ -10,6 +11,18 @@ import includes_any from '../../Utility/includes_any';
 import AssetController from '../../Controllers/AssetController';
 
 export default class DNN extends AssetController {
+    /**
+     * 
+     * @param {String} name - The name of the deep neural network instance
+     * @param {Object} default_config - The default drawing config
+     * @param {Number} default_config.x - The default x value for the DNN
+     * @param {Number} default_config.y - The default y value for the DNN
+     * @param {Number} default_config.diameter - The default node diameter value for the DNN
+     * @param {Number} default_config.layer_spacing - The default layer spacing for the DNN
+     * @param {Number} default_config.node_spacing - The default node spacing for the DNN
+     * @param {Object} default_config.weight_colors - The default weight color(s) for the DNN
+     * @param {Object} default_config.weight_thicknesses - The default weight thickneses for the DNN
+     */
     constructor(name, default_config) {
         super(name, default_config);
         
@@ -36,9 +49,9 @@ export default class DNN extends AssetController {
             this.__compute_edge_thicknesses();
     }
 
-    __update_drawing_config(updated_config) {
-        this.drawing_config = {
-            ...this.drawing_config,
+    __update_config(updated_config) {
+        this.config = {
+            ...this.config,
             ...updated_config
         }
     }
@@ -53,7 +66,7 @@ export default class DNN extends AssetController {
     }
 
     __compute_node_coordinates() {
-        const {x, y, diameter, layer_spacing, node_spacing} = this.drawing_config;
+        const {x, y, diameter, layer_spacing, node_spacing} = this.config;
 
         const vertical_spacing = diameter + node_spacing
         const horizontal_spacing = diameter + layer_spacing
@@ -89,9 +102,9 @@ export default class DNN extends AssetController {
                     var next_node = this.state[next_layer.name].node_coords[k];
                     
                     var edge_coords = [
-                        cur_node[0]+this.drawing_config.diameter/2, 
+                        cur_node[0]+this.config.diameter/2, 
                         cur_node[1], 
-                        next_node[0]-this.drawing_config.diameter/2, 
+                        next_node[0]-this.config.diameter/2, 
                         next_node[1],
                     ]
 
@@ -107,9 +120,8 @@ export default class DNN extends AssetController {
     }
 
     __compute_edge_colors() {
-        const { weight_colors } = this.drawing_config;
+        const { weight_colors } = this.config;
         const EDGE_COLOR_IDX = 4;
-        
         for(var i=0; i < this.state.edges.length; i++) {
             let color = weight_colors[i] || weight_colors || "black";
             
@@ -121,7 +133,7 @@ export default class DNN extends AssetController {
     }
 
     __compute_edge_thicknesses() {
-        const { weight_thicknesses } = this.drawing_config;   
+        const { weight_thicknesses } = this.config;   
         const EDGE_THICKNESS_IDX = 5;
         for(var i=0; i < this.state.edges.length; i++) {
             let thickness = weight_thicknesses[i] || weight_thicknesses;
@@ -158,7 +170,7 @@ export default class DNN extends AssetController {
                 push()
                 fill(cur_layer.color)
                 stroke(cur_layer.color)
-                circle(cur_node[0], cur_node[1], this.drawing_config.diameter);
+                circle(cur_node[0], cur_node[1], this.config.diameter);
                 pop();
             }
         }
