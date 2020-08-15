@@ -10,13 +10,22 @@ import { push, pop } from './Controllers/Context/State';
 // import CircelControlled from './Assets/Custom/Controlled/CircleControlled';
 import DNN from './Assets/Custom/DNN';
 
-var nn = new DNN("dnn1", {
-    
+
+var nn = new DNN('dnn1', {
+    x: 0,
+    y: 0,
+    layer_spacing: 160,
+    node_spacing: 120,
+    weight_colors: 'black',
+    weight_thicknesses: 1.3
 })
 
+nn.add_layer(2, "green", "input", {})
+nn.add_layer(3, "blue", "h_1", {})
+nn.add_layer(2, "blue", "output", {})
+
 function setup() {
-    // circ.draw()
-    // line(0,0, 100,100);
+    nn.draw();
 }
 
 var i=0;

@@ -10,10 +10,13 @@ export default class AssetController {
     }
 
     update(new_config) {
-        if(new_config) {
-            if(this.has_changed(new_config)) {
+        if(this.state.num_draws==0 || this.has_changed(new_config)) {
+            if(new_config)
                 this.update_config(new_config);
-                if(typeof this.compute === "function")
+            if(typeof this.compute === "function") {
+                if(this.state.num_draws==0)
+                    this.compute(Object.keys(this.default));
+                else
                     this.compute(this.get_compute_keys());
             }
         }

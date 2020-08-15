@@ -20,8 +20,8 @@ export default class DNN extends AssetController {
      * @param {Number} default_config.diameter - The default node diameter value for the DNN
      * @param {Number} default_config.layer_spacing - The default layer spacing for the DNN
      * @param {Number} default_config.node_spacing - The default node spacing for the DNN
-     * @param {Object} default_config.weight_colors - The default weight color(s) for the DNN
-     * @param {Object} default_config.weight_thicknesses - The default weight thickneses for the DNN
+     * @param {[Number] | Number} default_config.weight_colors - The default weight color(s) for the DNN
+     * @param {[Number] | Number} default_config.weight_thicknesses - The default weight thickneses for the DNN
      */
     constructor(name, default_config) {
         super(name, default_config);
@@ -35,7 +35,7 @@ export default class DNN extends AssetController {
 
         this._draw_edges();
         this._draw_nodes() ;
-        this._draw_annotations();
+        // this._draw_annotations();
     }
 
     compute(compute_keys) {
@@ -77,7 +77,7 @@ export default class DNN extends AssetController {
 
         for(var i=0; i < this.state.layer_configs.length; i++) {
             const cur_layer = this.state.layer_configs[i];
-            const layer_top = vertical_spacing*(cur_layer.size+max(sizes))/2 + y;
+            const layer_top = vertical_spacing*(cur_layer.size+Math.max(sizes))/2 + y;
 
             this.state[cur_layer.name] = {}
             this.state[cur_layer.name]["node_coords"] = []
@@ -170,7 +170,7 @@ export default class DNN extends AssetController {
                 push()
                 fill(cur_layer.color)
                 stroke(cur_layer.color)
-                circle(cur_node[0], cur_node[1], this.config.diameter);
+                circle(cur_node[0], cur_node[1], this.config.diameter/2);
                 pop();
             }
         }
