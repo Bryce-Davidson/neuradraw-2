@@ -10,7 +10,7 @@ export default class AnimationController extends AssetController {
      */
     constructor(name, frameIn, frameOut, default_config) {
         if(frameIn==undefined || frameOut==undefined)
-            throw new Error(`Please provide a frameIn and a frameOut for \"${name}\"`);
+            throw new Error(`Please provide a frameIn AND a frameOut for \"${name}\"`);
         super(name, default_config);
         this.frameIn = frameIn;
         this.frameOut = frameOut;
@@ -21,6 +21,7 @@ export default class AnimationController extends AssetController {
     };
 
     grow(config_key, type, frameIn, frameOut) {
-        
+        console.log(arguments)
+        // do something to append to the timeline
     }
 }

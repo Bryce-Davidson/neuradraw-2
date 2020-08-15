@@ -4,10 +4,10 @@ import mouse from './events';
 import CircleBasic from './Assets/Custom/Basic/CircleBasic';
 import CircelControlled from './Assets/Custom/Controlled/CircleControlled';
 
-var circ = new CircleBasic("circ")
+// var circ = new CircleBasic("circ")
 
-// var circ = new CircelControlled("circ", 0, 100)
-
+var circ = new CircelControlled("circ", 0, 100)
+circ.grow("x", "linear", 0, 100)
 console.log(circ);
 
 function draw() {
