@@ -7,7 +7,6 @@ import stroke_weight from '../../Controllers/Context/Cosmetic/stroke_weight';
 
 import includes_any from '../../Utility/includes_any';
 
-
 import AssetController from '../../Controllers/AssetController';
 
 export default class DNN extends AssetController {
@@ -60,7 +59,6 @@ export default class DNN extends AssetController {
         for(var i in this.state.layer_configs)
             if(this.state.layer_configs[i].name == name)
                 throw new Error(`"${name}" is already a layer in the network`)
-
         let new_layer = new DNNLayer(size, color, name, annotations);
         this.state.layer_configs.push(new_layer);
     }
@@ -77,7 +75,7 @@ export default class DNN extends AssetController {
 
         for(var i=0; i < this.state.layer_configs.length; i++) {
             const cur_layer = this.state.layer_configs[i];
-            const layer_top = vertical_spacing*(cur_layer.size+Math.max(sizes))/2 + y;
+            const layer_top = vertical_spacing*(cur_layer.size+Math.max(...sizes))/2 + y;
 
             this.state[cur_layer.name] = {}
             this.state[cur_layer.name]["node_coords"] = []
@@ -167,7 +165,7 @@ export default class DNN extends AssetController {
             var cur_layer = this.state.layer_configs[i];
             for(var j=0; j < cur_layer.size; j++) {
                 var cur_node = this.state[cur_layer.name].node_coords[j];
-                push()
+                push();
                 fill(cur_layer.color)
                 stroke(cur_layer.color)
                 circle(cur_node[0], cur_node[1], this.config.diameter/2);
