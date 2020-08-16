@@ -34,6 +34,7 @@ export default class AssetController {
         }
     }
 
+    // Need to configure save function to embrace new syntax for saving "thing.another.another_thing..."
     save(state_name, state) {
         this.state[state_name] = state;
     }

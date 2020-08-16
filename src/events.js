@@ -1,5 +1,5 @@
 import { canvas } from './canvas';
-import { setup } from './index';
+import { setup, draw } from './index';
 
 var mouse = {}
 addEventListener('mousemove', (event) => {
@@ -13,6 +13,7 @@ addEventListener('resize', () => {
     canvas.height = innerHeight
     // console.log(innerWidth, innerHeight)
     setup();
+    // draw();
 })
 
 export default mouse;

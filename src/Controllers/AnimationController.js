@@ -9,15 +9,20 @@ export default class AnimationController extends AssetController {
      * @param {Number} frameOut - The frame to stop drawing on relative to a scene
      */
     constructor(name, frameIn, frameOut, default_config) {
+        if(!name)
+            throw new Error('Please provide a name for the asset.')
         if(frameIn==undefined || frameOut==undefined)
             throw new Error(`Please provide a frameIn AND a frameOut for \"${name}\"`);
+        
         super(name, default_config);
+        
         this.frameIn = frameIn;
         this.frameOut = frameOut;
     }
 
     timeline(frame) {
-        console.log(frame);
+        if(frame >= this.frameIn && frame <= this.frameOut)
+            this.draw();
     };
 
     grow(config_key, type, frameIn, frameOut) {

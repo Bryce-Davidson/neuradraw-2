@@ -1,53 +1,44 @@
-import AssetController from './AnimationController';
-
+import { ctx, canvas } from './canvas';
+import AnimationController from './AnimationController';
 export default class Scene {
     /**
      * 
      * @param {String} name - the name of the scene
-     * @param {[AssetController]} assets - the array of assets in the scene
      * @param {Number} fps - The frames per second for the scene 
-     * @param {*} duration - The duration of the scene in miliseconds (1000 miliseconds = 1 second)
+     * @param {Number} duration - The duration of the scene in miliseconds (1000 miliseconds = 1 second)
+     * @param {[AnimationController]} assets - The duration of the scene in miliseconds (1000 miliseconds = 1 second)
      */
-    constructor(name, assets, fps, duration) {
+    constructor(name, fps, duration, assets) {
 
-        // this is stuff you need to enforce with typescript
-        // look into typescritpt
 
         this.name = name;
-        this.assets = assets;
         this.fps = fps;
         this.duration = duration;
         
-        this.num_frames = Math.round(fps * duration/1000);
-        this.frameIn;
-        this.frameOut;
+        this.num_frames = Math.round(fps * duration);
+        this.cur_frame = 0;
+        this.assets = assets || [];
+    }
+    
+    play() {
+        // This is where the canvas will be drawn to as well as the
+        // asset timelines being updated
+        window.setInterval(this.render, fps*1000)
+
     }
 
-    set_in(frameIn) {
-        this.frameIn = frameIn;
-        this.frameOut = this.frameIn + Math.round(this.fps * this.duration/1000);
-    }
-
-    /**
-     * 
-     * @param {Number} frame - The current frame of the animation timeline
-     */
-    timeline(frame) {
-        // make sure to call the asset timelines relative to the scene
-        if((frame >= this.frameIn && frame <= this.frameOut)) {
-            for(var i=0; i < this.assets.length; i++) {
-                this.assets[i].timeline(frame - this.frameIn);
-            }
+    render(frame) {
+        for(var i in assets) {
+            this.assets[i].timeline(frame);
         }
+        this.cur_frame++;
     }
 
+
     /**
-     * 
-     * @param {AssetController} asset - The drawing asset to be added to the scene
+     * @param {AnimationController} asset - The drawing asset to be added to the scene
      */
     add_asset(asset) {
-        // if the asset out is past the duration of the scene then warning
-        // get duration of asset
         if(asset.frameOut > this.frameOut) {
             console.warn(
                 `

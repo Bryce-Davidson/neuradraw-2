@@ -1,18 +1,20 @@
-import { push, pop } from '../../Controllers/Context/State';
-import circle from '../../Assets/Primitives/Circle';
-import line from '../Primitives/Line';
-import fill from '../../Controllers/Context/Cosmetic/fill';
-import stroke from '../../Controllers/Context/Cosmetic/stroke';
-import stroke_weight from '../../Controllers/Context/Cosmetic/stroke_weight';
+import { push, pop } from '../../../Controllers/Context/State';
+import circle from '../../Primitives/Circle';
+import line from '../../Primitives/Line';
+import fill from '../../../Controllers/Context/Cosmetic/fill';
+import stroke from '../../../Controllers/Context/Cosmetic/stroke';
+import stroke_weight from '../../../Controllers/Context/Cosmetic/stroke_weight';
 
-import includes_any from '../../Utility/includes_any';
+import includes_any from '../../../Utility/includes_any';
 
-import AssetController from '../../Controllers/AssetController';
+import AnimationController from '../../../Controllers/AnimationController';
 
-export default class DNN extends AssetController {
+export default class DNN extends AnimationController {
     /**
      * 
      * @param {String} name - The name of the deep neural network instance
+     * @param {Number} frameIn - The name of the deep neural network instance
+     * @param {Number} frameOut - The name of the deep neural network instance
      * @param {Object} default_config - The default drawing config
      * @param {Number} default_config.x - The default x value for the DNN
      * @param {Number} default_config.y - The default y value for the DNN
@@ -22,8 +24,8 @@ export default class DNN extends AssetController {
      * @param {[Number] | Number} default_config.weight_colors - The default weight color(s) for the DNN
      * @param {[Number] | Number} default_config.weight_thicknesses - The default weight thickneses for the DNN
      */
-    constructor(name, default_config) {
-        super(name, default_config);
+    constructor(name, frameIn, frameOut, default_config) {
+        super(name, frameIn, frameOut, default_config);
         
         this.save("layer_configs", [])
         this.save("edges", [])
@@ -32,9 +34,11 @@ export default class DNN extends AssetController {
     draw(new_config) {
         super.update(new_config);
 
+        if(this.state.layer_configs.length==0)
+            throw new Error('Layer configs is empty, please add a layer using add_layer()');
+
         this._draw_edges();
         this._draw_nodes() ;
-        // this._draw_annotations();
     }
 
     compute(compute_keys) {
@@ -46,13 +50,6 @@ export default class DNN extends AssetController {
             this.__compute_edge_colors();
         if(compute_keys.includes("weight_thicknesses"))
             this.__compute_edge_thicknesses();
-    }
-
-    __update_config(updated_config) {
-        this.config = {
-            ...this.config,
-            ...updated_config
-        }
     }
 
     add_layer(size, color, name, annotations) {
@@ -77,6 +74,8 @@ export default class DNN extends AssetController {
             const cur_layer = this.state.layer_configs[i];
             const layer_top = vertical_spacing*(cur_layer.size+Math.max(...sizes))/2 + y;
 
+            // TODO:
+                // Need to update the save function in asset contrller to embrace new syntax
             this.state[cur_layer.name] = {}
             this.state[cur_layer.name]["node_coords"] = []
 

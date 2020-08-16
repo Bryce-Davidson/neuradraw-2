@@ -8,10 +8,11 @@ import { push, pop } from './Controllers/Context/State';
 
 // import CircleBasic from './Assets/Custom/Basic/CircleBasic';
 // import CircelControlled from './Assets/Custom/Controlled/CircleControlled';
-import DNN from './Assets/Custom/DNN';
+// import DNN from './Assets/Custom/Basic/DNN-Basic';
+import DNN from './Assets/Custom/Controlled/DNN-Controlled';
 
 
-var nn = new DNN('dnn1', {
+var nn = new DNN('dnn1', 0, 6, {
     x: 0,
     y: 0,
     diameter: 60,
@@ -30,15 +31,16 @@ export function setup() {
 }
 
 var i=0;
-function draw(time) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    circ.draw({
-        x: circ.default.x + i,
-        y: circ.default.y + Math.pow(i, 1.01)
-    })
+export function draw(time) {
     i++;
-    requestAnimationFrame(draw)
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if(i >= nn.frameIn && i <= nn.frameOut) {
+        nn.timeline(i);
+    }
+    console.log(i);
+    // requestAnimationFrame(draw)
 }
 
-setup();
-// draw();
+// setup();
+draw();
+setInterval(draw, 1000);
