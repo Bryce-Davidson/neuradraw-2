@@ -1,3 +1,13 @@
 [] Begin to create the scenes
 [] Re-document the read me
 [] why don't use a set interval function call?
+
+
+We need to save some smart controls to the animation contrller in order to
+allow the tweening to happen
+
+I think that I'll have to look into creating a custom assets svg creator 
+that takes in svg points and draws an object
+
+stroing dimensions in order to produce tweening effects 
+or in order to produce smart tweening on it's own using a transition class

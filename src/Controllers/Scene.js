@@ -1,10 +1,9 @@
-import { ctx, canvas } from './canvas';
 import AnimationController from './AnimationController';
 export default class Scene {
     /**
      * 
      * @param {String} name - the name of the scene
-     * @param {Number} fps - The frames per second for the scene 
+     * @param {Number} fps - The frames per second for the scene
      * @param {Number} duration - The duration of the scene in miliseconds (1000 miliseconds = 1 second)
      * @param {[AnimationController]} assets - The duration of the scene in miliseconds (1000 miliseconds = 1 second)
      */
@@ -14,21 +13,26 @@ export default class Scene {
         this.name = name;
         this.fps = fps;
         this.duration = duration;
+        this.num_frames = Math.round(fps * duration/1000);
         
-        this.num_frames = Math.round(fps * duration);
         this.cur_frame = 0;
         this.assets = assets || [];
+        this.interval_id;
     }
     
     play() {
-        // This is where the canvas will be drawn to as well as the
-        // asset timelines being updated
-        window.setInterval(this.render, fps*1000)
-
+        this.interval_id = window.setInterval(()=> this.__render(this.cur_frame), 1000/this.fps)
     }
 
-    render(frame) {
-        for(var i in assets) {
+    stop() {
+        window.clearInterval(this.interval_id);
+    }
+
+    __render(frame) {
+        console.log(this.cur_frame);
+        if(this.cur_frame == this.num_frames)
+            this.stop();
+        for(var i in this.assets) {
             this.assets[i].timeline(frame);
         }
         this.cur_frame++;

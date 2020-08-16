@@ -25,6 +25,10 @@ export default class AnimationController extends AssetController {
             this.draw();
     };
 
+
+    // We need to save some smart controls to the animation contrller in order to
+    // allow the tweening to happen
+
     grow(config_key, type, frameIn, frameOut) {
         console.log(arguments)
         // do something to append to the timeline
