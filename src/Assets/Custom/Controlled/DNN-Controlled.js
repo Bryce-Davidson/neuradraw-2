@@ -38,11 +38,11 @@ export default class DNN extends AnimationController {
             throw new Error('Layer configs is empty, please add a layer using add_layer()');
 
         this._draw_edges();
-        this._draw_nodes() ;
+        this._draw_nodes();
     }
 
     compute(compute_keys) {
-        if(includes_any(compute_keys, ["x", "y", "layer_spacing", "node_spacing"])) {
+        if(includes_any(compute_keys, ["x", "y", "layer_spacing", "node_spacing", "diameter"])) {
             this.__compute_node_coordinates();
             this.__compute_edge_coordinates();
         }
@@ -75,7 +75,8 @@ export default class DNN extends AnimationController {
             const layer_top = vertical_spacing*(cur_layer.size+Math.max(...sizes))/2 + y;
 
             // TODO:
-                // Need to update the save function in asset contrller to embrace new syntax
+                // Need to update the save function in asset controller to embrace new syntax
+                // find new syntax in asset controller file
             this.state[cur_layer.name] = {}
             this.state[cur_layer.name]["node_coords"] = []
 

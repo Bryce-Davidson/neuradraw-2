@@ -14,28 +14,32 @@ export default class Scene {
      * @param {Number} config.fps - The frames per second for the scene
      * @param {Number} config.duration - The duration of the scene in miliseconds (1000 miliseconds = 1 second)
      * @param {Boolean} config.show_frame_count - Whether or not to show the frame count of the scene
-     * 
      */
-    constructor(ctx, name, config={fps:60, duration:5000, show_frame_count:true}) {
+    constructor(ctx, name, config) {
         this.name = name;
         this.ctx = ctx;
 
         // This was the only way i could find to make js doc document the config options
-        // as well as acheive defaults when only specifying one variable
-        // might need to search on stack
+        // as well as acheive defaults
+        // might need to search on stackoverflow
         this.config = config;
         this.config.fps = config.fps || 60;
+
+        if(this.config.fps > 60)
+            throw new Error(`Scene: ${this.name}, config.fps cannot be greater than 60.`)
+
         this.config.show_frame_count = config.show_frame_count || false;
         
         this.num_frames = Math.round(this.config.fps * this.config.duration/1000);
         this.cur_frame = 0;
-        this.assets = [];
         this.interval_id;
+        this.assets = [];
     }
     
     play() {
+        if(this.config.show_frame_count)
+            this.ctx.font = "30px Arial";
         this.interval_id = window.setInterval(()=> this.__render(this.cur_frame), 1000/this.config.fps)
-        this.ctx.font = "30px Arial";
     }
 
     stop() {
@@ -45,7 +49,7 @@ export default class Scene {
     __render(frame) {
         this.__clear_scene();
         if(this.config.show_frame_count)
-            this.ctx.fillText(`${this.cur_frame}`, 10, 50);
+            this.ctx.fillText(`${this.cur_frame}`, this.ctx.canvas.width - 100, 50);
         
         if(this.cur_frame == this.num_frames)
             this.stop();
