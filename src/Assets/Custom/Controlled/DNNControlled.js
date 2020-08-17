@@ -1,6 +1,6 @@
 import { push, pop } from '../../../Controllers/Context/State';
-import circle from '../../Primitives/Circle';
-import line from '../../Primitives/Line';
+import circle from '../../Primitives/Canvas/Circle';
+import line from '../../Primitives/Canvas/Line';
 import fill from '../../../Controllers/Context/Cosmetic/fill';
 import stroke from '../../../Controllers/Context/Cosmetic/stroke';
 import stroke_weight from '../../../Controllers/Context/Cosmetic/stroke_weight';
@@ -27,8 +27,11 @@ export default class DNN extends AnimationController {
     constructor(name, frameIn, frameOut, default_config) {
         super(name, frameIn, frameOut, default_config);
         
-        this.save("layer_configs", [])
-        this.save("edges", [])
+        // this.save("layer_configs", [])
+        this.state.layer_configs = []
+
+        // this.save("edges", [])
+        this.state.edges = [];
     }
 
     draw(new_config) {

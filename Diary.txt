@@ -11,3 +11,6 @@ that takes in svg points and draws an object
 
 stroing dimensions in order to produce tweening effects 
 or in order to produce smart tweening on it's own using a transition class
+
+
+do i really need two dnn classes i don't think so

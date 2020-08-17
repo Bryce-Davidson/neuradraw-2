@@ -1,7 +1,6 @@
 import isEqual from 'lodash.isequal';
 export default class AssetController {
     constructor(name, default_config) {
-        // enforce default config with typescript somehow
         this.name = name;
         this.config = default_config;
         this.default = default_config;
@@ -24,7 +23,6 @@ export default class AssetController {
     }
     
     /**
-     * 
      * @param {Object} new_config - The config to update this.config to
      */
     update_config(new_config) {
@@ -32,11 +30,6 @@ export default class AssetController {
             ...this.config,
             ...new_config
         }
-    }
-
-    // Need to configure save function to embrace new syntax for saving "thing.another.another_thing..."
-    save(state_name, state) {
-        this.state[state_name] = state;
     }
 
     has_changed(new_config) {

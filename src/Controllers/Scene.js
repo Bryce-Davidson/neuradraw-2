@@ -19,9 +19,6 @@ export default class Scene {
         this.name = name;
         this.ctx = ctx;
 
-        // This was the only way i could find to make js doc document the config options
-        // as well as acheive defaults
-        // might need to search on stackoverflow
         this.config = config;
         this.config.fps = config.fps || 60;
 
@@ -37,6 +34,8 @@ export default class Scene {
     }
     
     play() {
+        if(this.assets.length==0)
+            throw new Error(`There are no assets in Scene: ${this.name}`)
         if(this.config.show_frame_count)
             this.ctx.font = "30px Arial";
         this.interval_id = window.setInterval(()=> this.__render(this.cur_frame), 1000/this.config.fps)
@@ -47,15 +46,15 @@ export default class Scene {
     }
 
     __render(frame) {
-        this.__clear_scene();
-        if(this.config.show_frame_count)
-            this.ctx.fillText(`${this.cur_frame}`, this.ctx.canvas.width - 100, 50);
-        
         if(this.cur_frame == this.num_frames)
             this.stop();
+        
+        this.__clear_scene();
         for(var i in this.assets) {
-            this.assets[i].timeline(frame);
+            this.assets[i].render_frame(frame);
         }
+        if(this.config.show_frame_count)
+            this.ctx.fillText(`${this.cur_frame}`, this.ctx.canvas.width - 100, 50);
         this.cur_frame++;
     }
 

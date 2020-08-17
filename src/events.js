@@ -7,6 +7,7 @@ addEventListener('mousemove', (event) => {
     // console.log(mouse.x, mouse.y)
 })
 
+// Broken - event does not update scene canvas width
 addEventListener('resize', () => {
     ctx.canvas.width = innerWidth
     ctx.canvas.height = innerHeight
