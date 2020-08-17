@@ -37,7 +37,6 @@ export default class Scene {
 
     __render(frame) {
         // console.log(this.cur_frame);
-        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
         this.ctx.fillText(`${this.cur_frame}`, 10, 50);
 
         if(this.cur_frame == this.num_frames)
@@ -48,6 +47,9 @@ export default class Scene {
         this.cur_frame++;
     }
 
+    clear_scene() {
+        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
+    }
 
     /**
      * @param {AnimationController} asset - The drawing asset to be added to the scene
