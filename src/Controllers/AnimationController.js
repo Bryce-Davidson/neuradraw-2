@@ -22,6 +22,7 @@ export default class AnimationController extends AssetController {
 
     timeline(frame) {
         if(frame >= this.frameIn && frame <= this.frameOut)
+        // this is really where the bulk of animation contrller will be written and maintained blah blah
             this.draw();
     };
 
