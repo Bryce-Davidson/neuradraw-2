@@ -8,26 +8,33 @@ import AnimationController from './AnimationController';
 export default class Scene {
     /**
      * 
-     * @param {Object} ctx - the name of the scene
-     * @param {String} name - the name of the scene
-     * @param {Number} fps - The frames per second for the scene
-     * @param {Number} duration - The duration of the scene in miliseconds (1000 miliseconds = 1 second)
-     * @param {[AnimationController]} assets - The duration of the scene in miliseconds (1000 miliseconds = 1 second)
+     * @param {Object} ctx - The ctx for the scene to draw on
+     * @param {String} name - The name of the scene
+     * @param {Object} config - The config object for the scene
+     * @param {Number} config.fps - The frames per second for the scene
+     * @param {Number} config.duration - The duration of the scene in miliseconds (1000 miliseconds = 1 second)
+     * @param {Boolean} config.show_frame_count - Whether or not to show the frame count of the scene
+     * 
      */
-    constructor(ctx, name, fps, duration, assets) {
-        this.ctx = ctx;
+    constructor(ctx, name, config={fps:60, duration:5000, show_frame_count:true}) {
         this.name = name;
-        this.fps = fps;
-        this.duration = duration;
-        this.num_frames = Math.round(fps * duration/1000);
+        this.ctx = ctx;
+
+        // This was the only way i could find to make js doc document the config options
+        // as well as acheive defaults when only specifying one variable
+        // might need to search on stack
+        this.config = config;
+        this.config.fps = config.fps || 60;
+        this.config.show_frame_count = config.show_frame_count || false;
         
+        this.num_frames = Math.round(this.config.fps * this.config.duration/1000);
         this.cur_frame = 0;
-        this.assets = assets || [];
+        this.assets = [];
         this.interval_id;
     }
     
     play() {
-        this.interval_id = window.setInterval(()=> this.__render(this.cur_frame), 1000/this.fps)
+        this.interval_id = window.setInterval(()=> this.__render(this.cur_frame), 1000/this.config.fps)
         this.ctx.font = "30px Arial";
     }
 
@@ -36,9 +43,10 @@ export default class Scene {
     }
 
     __render(frame) {
-        // console.log(this.cur_frame);
-        this.ctx.fillText(`${this.cur_frame}`, 10, 50);
-
+        this.__clear_scene();
+        if(this.config.show_frame_count)
+            this.ctx.fillText(`${this.cur_frame}`, 10, 50);
+        
         if(this.cur_frame == this.num_frames)
             this.stop();
         for(var i in this.assets) {
@@ -47,7 +55,7 @@ export default class Scene {
         this.cur_frame++;
     }
 
-    clear_scene() {
+    __clear_scene() {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
     }
 

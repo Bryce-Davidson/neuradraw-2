@@ -7,10 +7,10 @@ import Scene from './Controllers/Scene';
 import DNN from './Assets/Custom/Controlled/DNN-Controlled';
 
 
-
-// d1.draw();
-
-var s1 = new Scene(ctx, "s1", 60, 6*1000);
+var s1 = new Scene(ctx, "s1", {
+    duration:5000, 
+    show_frame_count:true
+})
 
 var d1 = new DNN("d1", 0, s1.num_frames, {
     x: 0,
