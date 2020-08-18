@@ -42,7 +42,11 @@ export default class Scene {
         if(this.config.show_time)
             this.start_time = new Date();
         
-            this.__render(this.cur_frame)
+
+        // TODO
+            // change this so render doesn't have to be called like this
+
+        this.__render(this.cur_frame)
         this.interval_id = window.setInterval(()=> this.__render(this.cur_frame), 1000/this.config.fps)
     }
 

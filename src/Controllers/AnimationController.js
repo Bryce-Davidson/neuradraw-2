@@ -26,7 +26,7 @@ export default class AnimationController extends AssetController {
         this.frame_in = frame_in;
         this.frame_out= frame_out;
 
-        this.timeline = new Timeline(frame_out-frame_in, default_config);
+        this.timeline = new Timeline(frame_in, frame_out, default_config);
     }
 
     render_frame(frame) {        

@@ -1,5 +1,10 @@
 import isEqual from 'lodash.isequal';
 export default class AssetController {
+    /**
+     * 
+     * @param {String} name - The name of the asset
+     * @param {Object} default_config - The default drawing config
+     */
     constructor(name, default_config) {
         this.name = name;
         this.config = default_config;
