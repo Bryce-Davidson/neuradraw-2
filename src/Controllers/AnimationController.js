@@ -34,4 +34,6 @@ export default class AnimationController extends AssetController {
            return this.draw(this.timeline.get_frame(frame));
         }
     }
+
+    // I think At this point i can create the tweening functions
 }
