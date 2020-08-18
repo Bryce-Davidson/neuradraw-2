@@ -1,4 +1,4 @@
-import { ctx } from '../../../canvas';
+import { ctx } from '../../../Meta/canvas';
 
 export default function line(x_1, y_1, x_2, y_2) {
     ctx.beginPath();

@@ -1,4 +1,4 @@
-import { ctx } from './canvas';
+import { ctx } from './Meta/canvas';
 import Scene from './Controllers/Scene';
 
 // import DNN from './Assets/Custom/Basic/DNN-Basic';
@@ -25,12 +25,10 @@ d1.add_layer(2, "blue", "input", {})
 d1.add_layer(3, "green", "h_1", {})
 d1.add_layer(2, "red", "output", {})
 
-d1.to("x", 10, 30, 0);
-
-console.log(d1.timeline.timeline)
+console.log(d1);
 
 s1.add_asset(d1)
-console.log(s1)
+// console.log(s1)
 s1.play();
 
 

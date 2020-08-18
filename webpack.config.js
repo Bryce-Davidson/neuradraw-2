@@ -17,7 +17,7 @@ module.exports = {
             // The title of the html file
             title: "Development",
             // template for the html
-            template: "src/html.template"
+            template: "./html.template"
         })
     ],
     output: {

@@ -26,25 +26,24 @@ export default class DNN extends AnimationController {
      */
     constructor(name, frameIn, frameOut, default_config) {
         super(name, frameIn, frameOut, default_config);
-        
-        // this.save("layer_configs", [])
-        this.state.layer_configs = []
-
-        // this.save("edges", [])
-        this.state.edges = [];
+    
+        this.save({ layer_configs: [], edges: [] })
     }
 
     draw(new_config) {
         super.update(new_config);
 
+        // Errors
         if(this.state.layer_configs.length==0)
             throw new Error('Layer configs is empty, please add a layer using add_layer()');
 
         this._draw_edges();
         this._draw_nodes();
+        return;
     }
 
     compute(compute_keys) {
+        // Just need to write out what you wan't to compute etc
         if(includes_any(compute_keys, ["x", "y", "layer_spacing", "node_spacing", "diameter"])) {
             this.__compute_node_coordinates();
             this.__compute_edge_coordinates();

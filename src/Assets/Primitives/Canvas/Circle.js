@@ -1,4 +1,4 @@
-import { ctx } from '../../../canvas';
+import { ctx } from '../../../Meta/canvas';
 
 export default function circle(x, y, radius) {
     ctx.beginPath();

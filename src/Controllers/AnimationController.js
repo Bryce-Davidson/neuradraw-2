@@ -1,6 +1,14 @@
 import AssetController from './AssetController';
 import Timeline from './Timeline';
 
+/**
+ * Guiding principles
+ * 
+ * AnimationController should controll everything that has to do
+ * with the existance of the asset.
+ * 
+ * It will control and manipulate it's own timeline to fit this purpose
+ */
 export default class AnimationController extends AssetController {
     /**
      * 
@@ -15,25 +23,15 @@ export default class AnimationController extends AssetController {
         if(frame_in==undefined || frame_out==undefined)
             throw new Error(`Please provide a frame_in AND a frame_out for \"${name}\"`);
         super(name, default_config);
-        this.timeline = new Timeline(frame_in, frame_out);
+        this.frame_in = frame_in;
+        this.frame_out= frame_out;
+
+        this.timeline = new Timeline(frame_out-frame_in, default_config);
     }
 
-    render_frame(frame) {
-        // we only use this top line here becasue
-        // I think we need to include frame logic here
-        var draw_config = this.timeline.get_frame(frame) || this.config;
-        this.draw(draw_config);
-    }
-
-    to(config_key, frame_in, frame_out, start) {
-        var new_config = {}
-        new_config[config_key] = start;
-        for(var i=0; i < Array.from(Array(frame_out-frame_in).keys()).length; i++) {
-            new_config[config_key] += i;
-            this.timeline.timeline.push({
-                ...this.config,
-                ... new_config
-            })
+    render_frame(frame) {        
+        if(frame >= this.frame_in && frame <= this.frame_out) {
+           return this.draw(this.timeline.get_frame(frame));
         }
     }
 }

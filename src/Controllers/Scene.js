@@ -1,10 +1,5 @@
 import AnimationController from './AnimationController';
 
-// The scene really should be drawing to a custom canvas element
-// So that you can do split screen mode
-
-// that just means all the primitive objects will havr to be passed a context as an argument
-
 export default class Scene {
     /**
      * 

@@ -1,4 +1,4 @@
-import { ctx } from '../../../canvas';
+import { ctx } from '../../../Meta/canvas';
 
 export default function fill(color) {
     ctx.fillStyle = color;
