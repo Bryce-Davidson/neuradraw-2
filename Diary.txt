@@ -1,6 +1,7 @@
 [] Begin to create the scenes
 [] Re-document the read me
 [] why don't use a set interval function call?
+[] only need to extend animation controller with a single asset like only one DNN
 
 
 We need to save some smart controls to the animation contrller in order to
@@ -13,4 +14,7 @@ stroing dimensions in order to produce tweening effects
 or in order to produce smart tweening on it's own using a transition class
 
 
-do i really need two dnn classes i don't think so
+
+[] learn about tweening
+
+I need to resolve the fps issue

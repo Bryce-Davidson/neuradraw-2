@@ -9,15 +9,13 @@ export default class AssetController {
     }
 
     update(new_config) {
-        if(this.state.num_draws==0 || this.has_changed(new_config)) {
-            if(new_config)
-                this.update_config(new_config);
-            if(typeof this.compute === "function") {
-                if(this.state.num_draws==0)
-                    this.compute(Object.keys(this.default));
-                else
-                    this.compute(this.get_compute_keys());
-            }
+        if(typeof this.compute === "function" && this.state.num_draws==0)
+                this.compute(Object.keys(this.config));
+
+        if(this.has_changed(new_config)) {
+            if(typeof this.compute === "function")
+                this.compute(this.get_compute_keys(new_config));
+            this.update_config(new_config);
         }
         this.state.num_draws++;
     }
@@ -33,7 +31,7 @@ export default class AssetController {
     }
 
     has_changed(new_config) {
-        var is_equal = isEqual(this.drawing_config, new_config);
+        var is_equal = isEqual(this.config, new_config);
         return !is_equal;
     }
 
@@ -41,7 +39,7 @@ export default class AssetController {
         var compute_keys = [];
         const keys = Object.keys(new_config);
         for(var i=0; i < keys.length; i++)
-            if(!isEqual(new_config[keys[i]], this.drawing_config[keys[i]]))
+            if(!isEqual(new_config[keys[i]], this.config[keys[i]]))
                 compute_keys.push(keys[i]);
         return compute_keys;
     }

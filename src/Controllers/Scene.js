@@ -54,7 +54,7 @@ export default class Scene {
             this.assets[i].render_frame(frame);
         }
         if(this.config.show_frame_count)
-            this.ctx.fillText(`${this.cur_frame}`, this.ctx.canvas.width - 100, 50);
+        this.ctx.fillText(`${this.cur_frame}`, this.ctx.canvas.width - 100, 50);
         this.cur_frame++;
     }
 

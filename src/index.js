@@ -10,6 +10,7 @@ var s1 = new Scene(ctx, "s1", {
     fps: 60
 })
 
+// draw dnn for the entire thing
 var d1 = new DNN("d1", 0, s1.num_frames, {
     x: 0,
     y: 0,
@@ -23,12 +24,18 @@ var d1 = new DNN("d1", 0, s1.num_frames, {
 d1.add_layer(2, "blue", "input", {})
 d1.add_layer(3, "green", "h_1", {})
 d1.add_layer(2, "red", "output", {})
-// console.log(d1)
+
+d1.to("x", 10, 30, 0);
+
+console.log(d1.timeline.timeline)
 
 s1.add_asset(d1)
-// console.log(s1)
+console.log(s1)
 s1.play();
 
+
+// -------
+// point map
 
 
 // The animatoin controller is for assets whos methods are

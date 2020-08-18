@@ -19,6 +19,21 @@ export default class AnimationController extends AssetController {
     }
 
     render_frame(frame) {
-        this.draw(this.timeline.get_config(frame));
+        // we only use this top line here becasue
+        // I think we need to include frame logic here
+        var draw_config = this.timeline.get_frame(frame) || this.config;
+        this.draw(draw_config);
+    }
+
+    to(config_key, frame_in, frame_out, start) {
+        var new_config = {}
+        new_config[config_key] = start;
+        for(var i=0; i < Array.from(Array(frame_out-frame_in).keys()).length; i++) {
+            new_config[config_key] += i;
+            this.timeline.timeline.push({
+                ...this.config,
+                ... new_config
+            })
+        }
     }
 }
