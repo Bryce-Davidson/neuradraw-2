@@ -7,7 +7,8 @@ import DNN from './Assets/Custom/Controlled/DNNControlled';
 var s1 = new Scene(ctx, "s1", {
     duration:1000, 
     show_frame_count:true,
-    fps: 60
+    fps: 24,
+    show_time: true
 })
 
 // draw dnn for the entire thing
