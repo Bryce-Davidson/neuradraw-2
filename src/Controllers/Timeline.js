@@ -10,7 +10,7 @@ export default class Timeline {
 
     get_frame(frame) {
         this.cur_frame++;
-        return this.timeline[frame];;
+        return this.timeline[frame];
     }
 
     add_frame(index, source) {

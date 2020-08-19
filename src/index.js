@@ -3,16 +3,16 @@ import Scene from './Controllers/Scene';
 
 // import DNN from './Assets/Custom/Basic/DNN-Basic';
 import DNN from './Assets/Custom/Controlled/DNNControlled';
-import { easeBounceOut, easeCircle, easeCubicInOut } from 'd3-ease';
+import { easeBounceOut, easeCircle, easeCubicInOut, easeExpIn, easeQuadOut } from 'd3-ease';
 
 var s1 = new Scene(ctx, "s1", {
-    duration:2000, 
+    duration:10000, 
     show_frame_count: true,
     fps: 60,
     show_time: true
 })
 
-var d1 = new DNN("d1", 0, s1.num_frames, {
+var d1 = new DNN("d1", 40, s1.num_frames, {
     x: 50,
     y: 0,
     diameter: 60,
@@ -27,22 +27,23 @@ d1.add_layer(5, "green", "h_1", {})
 d1.add_layer(5, "purple", "h_2", {})
 d1.add_layer(2, "red", "output", {})
 
-d1.value_from_to("node_spacing", {
-    easing: easeCubicInOut,
-    from: 0,
-    to: 200,
-    start_frame: 0,
-    end_frame: s1.num_frames/2
-})
+
 
 d1.value_from_to("layer_spacing", {
-    easing: easeCubicInOut,
-    from: 0,
-    to: 120,
-    start_frame: 0,
-    end_frame: s1.num_frames
+    easing: easeExpIn,
+    from: d1.config.layer_spacing,
+    to: 150,
+    start_frame: 40,
+    end_frame: s1.num_frames/4
 })
 
+d1.value_from_to("node_spacing", {
+    easing: easeExpIn,
+    from: d1.config.node_spacing,
+    to: 150,
+    start_frame: 60,
+    end_frame: s1.num_frames
+})
 
 s1.add_asset(d1)
 // console.log(s1)

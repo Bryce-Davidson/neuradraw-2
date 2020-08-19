@@ -27,6 +27,7 @@ export default class AnimationController extends AssetController {
             var cur_frame = this.timeline.get_frame(frame-this.frame_in)
             return this.draw(cur_frame);
         }
+        return;
     }
 
     /**
@@ -42,7 +43,7 @@ export default class AnimationController extends AssetController {
 
         var tween = interpolateNumber(from, to)
         for(var i=start_frame; i<end_frame; i++) {
-            this.timeline.update_frame(i, {
+            this.timeline.update_frame(i-this.frame_in, {
                 [config_key]: tween(easing(i/end_frame))
             })
         }
