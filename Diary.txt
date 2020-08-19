@@ -1,3 +1,1 @@
-[] learn about tweening
-
-starting to question if i need the default config??
+I have to "render the timeline first"

@@ -3,10 +3,10 @@ const path = require("path");
 
 module.exports = {
     mode: "development",
-    entry: "./src/index.js",
+    entry: {
+        main: "./src/index.js"
+    },
     devtool: "inline-source-map",
-    // devtool: "none",
-    // watch: true,
     devServer: {
         contentBase: './dist',
         clientLogLevel: 'info',

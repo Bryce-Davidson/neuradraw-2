@@ -10,18 +10,18 @@
 // aka the index
 
 export default class Timeline {
-    constructor(frame_in, frame_out, default_config) {
-        this.frame_in = frame_in;
-        this.timeline = new Array(frame_out-frame_in);
-        this.timeline.fill(default_config, 0)
+    constructor(total_frames, default_config) {
+        this.timeline = [];
+        for(var i=0; i < total_frames; i++) {
+            let obj = {...default_config};
+            this.timeline.push(obj)
+        }
         this.cur_frame = 0;
     }
 
-    get_frame(frame, frame_in) {
+    get_frame(frame) {
         this.cur_frame++;
-        var idx = frame - this.frame_in
-        var thing = this.timeline[idx];
-        return thing;
+        return this.timeline[frame];;
     }
 
     add_frame(index, source) {
@@ -30,5 +30,6 @@ export default class Timeline {
 
     update_frame(target_index, source) {
         Object.assign(this.timeline[target_index], source)
+        console.log(this.timeline[target_index]);
     }
 }

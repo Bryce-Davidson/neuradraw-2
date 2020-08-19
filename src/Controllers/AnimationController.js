@@ -1,14 +1,7 @@
 import AssetController from './AssetController';
 import Timeline from './Timeline';
+import { interpolateObject, interpolateNumber } from 'd3-interpolate';
 
-/**
- * Guiding principles
- * 
- * AnimationController should controll everything that has to do
- * with the existance of the asset.
- * 
- * It will control and manipulate it's own timeline to fit this purpose
- */
 export default class AnimationController extends AssetController {
     /**
      * 
@@ -26,14 +19,41 @@ export default class AnimationController extends AssetController {
         this.frame_in = frame_in;
         this.frame_out= frame_out;
 
-        this.timeline = new Timeline(frame_in, frame_out, default_config);
+        this.timeline = new Timeline(frame_out-frame_in, default_config);
     }
 
     render_frame(frame) {        
         if(frame >= this.frame_in && frame <= this.frame_out) {
-           return this.draw(this.timeline.get_frame(frame));
+            var cur_frame = this.timeline.get_frame(frame-this.frame_in)
+            return this.draw(cur_frame);
         }
     }
 
-    // I think At this point i can create the tweening functions
+    /**
+     * 
+     * @param {String} config_key - The config key to tween.
+     * @param {Object} param1 - Config object
+     * @param {Function} param1.easing - A D3.js easing function to be used
+     */
+    to(config_key, {easing, from, to, start_frame=this.frame_in, end_frame=this.frame_out}) {
+
+        if(start_frame < this.frame_in || end_frame > this.frame_out)
+            console.warn(`
+                    start_frame or end_frame is being clipped by  
+                    ${this.name}'s frame_in or frame_out value.
+                    on function call ${this.name}.to(..., {
+                        ...,
+                        start_frame:${start_frame},
+                        end_frame:${end_frame},
+                        ...
+                    })
+            `)
+
+        var tween = interpolateNumber(from, to)
+        for(var i=start_frame; i<end_frame; i++) {
+            this.timeline.update_frame(i, {
+                [config_key]: tween(easing(i/end_frame))
+            })
+        }
+    }
 }
