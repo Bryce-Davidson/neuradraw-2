@@ -12,9 +12,6 @@ var s1 = new Scene(ctx, "s1", {
     show_time: true
 })
 
-console.log(s1.num_frames)
-
-// draw dnn for the entire thing
 var d1 = new DNN("d1", 0, s1.num_frames, {
     x: 50,
     y: 0,
@@ -22,7 +19,7 @@ var d1 = new DNN("d1", 0, s1.num_frames, {
     layer_spacing: 100,
     node_spacing: 20,
     weight_colors: 'blue',
-    weight_thicknesses: 2
+    weight_thicknesses: 0.2
 })
 
 d1.add_layer(3, "blue", "input", {})
@@ -30,21 +27,23 @@ d1.add_layer(5, "green", "h_1", {})
 d1.add_layer(5, "purple", "h_2", {})
 d1.add_layer(2, "red", "output", {})
 
-d1.to("x", {
+d1.value_from_to("node_spacing", {
     easing: easeCubicInOut,
     from: 0,
-    to: 1000,
+    to: 200,
     start_frame: 0,
-    end_frame: s1.num_frames/1.5
+    end_frame: s1.num_frames/2
 })
 
-d1.to("node_spacing", {
+d1.value_from_to("layer_spacing", {
     easing: easeCubicInOut,
     from: 0,
-    to: 100,
+    to: 120,
     start_frame: 0,
-    end_frame: s1.num_frames/1.5
+    end_frame: s1.num_frames
 })
+
+
 s1.add_asset(d1)
 // console.log(s1)
 s1.play();

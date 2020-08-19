@@ -123,7 +123,12 @@ export default class DNN extends AnimationController {
         const { weight_colors } = this.config;
         const EDGE_COLOR_IDX = 4;
         for(var i=0; i < this.state.edges.length; i++) {
-            let color = weight_colors[i] || weight_colors || "black";
+            let color;
+
+            if(Array.isArray(weight_colors))
+                color = weight_colors[i]
+            else
+                color = weight_colors || 'black';
             
             if(this.state.edges[i][EDGE_COLOR_IDX])
                 this.state.edges[i][EDGE_COLOR_IDX] = color;

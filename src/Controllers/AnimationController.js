@@ -35,7 +35,24 @@ export default class AnimationController extends AssetController {
      * @param {Object} param1 - Config object
      * @param {Function} param1.easing - A D3.js easing function to be used
      */
-    to(config_key, {easing, from, to, start_frame=this.frame_in, end_frame=this.frame_out}) {
+    value_from_to(config_key, {easing, from, to, start_frame=this.frame_in, end_frame=this.frame_out}) {
+
+        if(start_frame < this.frame_in || end_frame > this.frame_out)
+            throw new Error(`start_frame or end_frame is being clipped by ${this.name}'s frame_in or frame_out value.`)
+
+        var tween = interpolateNumber(from, to)
+        for(var i=start_frame; i<end_frame; i++) {
+            this.timeline.update_frame(i, {
+                [config_key]: tween(easing(i/end_frame))
+            })
+        }
+
+        this.timeline.update_rest_from(end_frame, {
+            [config_key]: to
+        })
+    }
+
+    config_from_to(config_key, {easing, from, to, start_frame=this.frame_in, end_frame=this.frame_out}) {
 
         if(start_frame < this.frame_in || end_frame > this.frame_out)
             console.warn(`

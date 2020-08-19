@@ -1,14 +1,3 @@
-// Timeline is just an array of drawing configs with some fancy functions
-// that update the timeline etc..
-// replace etc
-
-
-// Timeline needs to handle the updating and insertion of new frames will preserving unchanged
-// values within those frames
-
-// each frame is a drawing config to be returned on key of frame
-// aka the index
-
 export default class Timeline {
     constructor(total_frames, default_config) {
         this.timeline = [];
@@ -30,6 +19,11 @@ export default class Timeline {
 
     update_frame(target_index, source) {
         Object.assign(this.timeline[target_index], source)
-        console.log(this.timeline[target_index]);
+    }
+
+    update_rest_from(index, source) {
+        for(var i=index; i < this.timeline.length; i++) {
+            Object.assign(this.timeline[i], source)
+        }
     }
 }
