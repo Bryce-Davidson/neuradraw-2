@@ -165,9 +165,9 @@ export default class DNN extends AnimationController {
         for(var i=0; i < this.state.edges.length; i++) {
             let e = this.state.edges[i];
             push();
-            stroke(e[COLOR_IDK]);
-            stroke_weight(e[EDGE_THICKNESS_IDX]);
-            line(e[X_1_IDX], e[Y_1_IDX], e[X_2_IDX], e[Y_2_IDX])
+            stroke(this.ctx, e[COLOR_IDK]);
+            stroke_weight(this.ctx, e[EDGE_THICKNESS_IDX]);
+            line(this.ctx, e[X_1_IDX], e[Y_1_IDX], e[X_2_IDX], e[Y_2_IDX])
             pop();
         }
     }
@@ -178,9 +178,9 @@ export default class DNN extends AnimationController {
             for(var j=0; j < cur_layer.size; j++) {
                 var cur_node = this.state[cur_layer.name].node_coords[j];
                 push();
-                fill(cur_layer.color)
-                stroke(cur_layer.color)
-                circle(cur_node[0], cur_node[1], this.config.diameter/2);
+                fill(this.ctx, cur_layer.color)
+                stroke(this.ctx, cur_layer.color)
+                circle(this.ctx, cur_node[0], cur_node[1], this.config.diameter/2);
                 pop();
             }
         }

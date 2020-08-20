@@ -1,5 +1,3 @@
-import { ctx } from '../../../Meta/canvas';
-
-export default function stroke_weight(weight) {
+export default function stroke_weight(ctx, weight) {
     ctx.lineWidth = weight;
 }

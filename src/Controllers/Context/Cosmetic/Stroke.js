@@ -1,5 +1,3 @@
-import { ctx } from '../../../Meta/canvas';
-
-export default function stroke(color) {
+export default function stroke(ctx, color) {
     ctx.strokeStyle = color;
 }

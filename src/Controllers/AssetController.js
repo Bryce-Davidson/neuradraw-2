@@ -7,11 +7,24 @@ export default class AssetController {
      * @returns AssetController
      */
     constructor(name, default_config) {
+        if(!name)
+            throw new Error('Please provide a name for the asset.')
         this.name = name;
         this.config = default_config;
         this.default = default_config;
         this.state = {};
         this.state.num_draws = 0;
+        this.ctx;
+    }
+
+    /**
+     * Sets the drawing context for the asset.
+     * 
+     * @param {CanvasRenderingContext2D} ctx - The CanvasRenderingContext2D from a canvas element
+     * @returns undefined
+     */
+    set_context(ctx) {
+        this.ctx = ctx;
     }
 
     update(new_config) {

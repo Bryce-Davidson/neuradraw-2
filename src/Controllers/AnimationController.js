@@ -12,12 +12,9 @@ export default class AnimationController extends AssetController {
      * @returns AnimationController
      */
     constructor(name, frame_in, frame_out, default_config) {
-        if(!name)
-            throw new Error('Please provide a name for the asset.')
+        super(name, default_config);
         if(frame_in==undefined || frame_out==undefined)
             throw new Error(`Please provide a frame_in AND a frame_out for \"${name}\"`);
-        
-        super(name, default_config);
         this.timeline = new Timeline(frame_in, frame_out);
         this.timeline.init(this.default_config)
     }

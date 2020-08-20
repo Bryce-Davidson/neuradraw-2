@@ -5,10 +5,10 @@ import Scene from './Controllers/Scene';
 import Circle from './Assets/Custom/Controlled/CircleControlled';
 import DNN from './Assets/Custom/Controlled/DNNControlled';
 import { interpolateNumber, interpolateObject } from 'd3-interpolate';
-import { easeBounceOut, easeCubicInOut, easeQuadInOut, easePolyInOut } from 'd3-ease';
+import { easeBounceOut, easeCubicInOut, easeQuadInOut, easePolyInOut, easeBackInOut, easeElasticOut } from 'd3-ease';
 
 var s1 = new Scene(ctx, "s1", {
-    duration:10000, 
+    duration:1000, 
     show_frame_count: true,
     fps: 60,
     show_time: true
@@ -35,15 +35,13 @@ var c1 = new Circle('c1', 0, s1.num_frames, {
     radius: 45
 })
 
-var polyease = easePolyInOut.exponent(12)
-
 c1.value_from_to({
     config_key: "x",
-    easing: polyease,
+    easing: easeElasticOut.amplitude(1).period(0.9),
     from: c1.config.x,
-    to: ctx.canvas.width-100,
+    to: ctx.canvas.width-300,
     start_frame: 0,
-    end_frame: s1.num_frames/10
+    end_frame: Math.floor(s1.num_frames)
 })
 
 s1.add_asset(d1)

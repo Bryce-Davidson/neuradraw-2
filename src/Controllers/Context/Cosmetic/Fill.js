@@ -1,5 +1,3 @@
-import { ctx } from '../../../Meta/canvas';
-
-export default function fill(color) {
+export default function fill(ctx, color) {
     ctx.fillStyle = color;
 }

@@ -13,6 +13,6 @@ export default class CircelControlled extends AnimationController {
 
     draw(new_config) {
         super.update(new_config);
-        circle(this.config.x, this.config.y, this.config.radius)
+        circle(this.ctx, this.config.x, this.config.y, this.config.radius)
     }
 }

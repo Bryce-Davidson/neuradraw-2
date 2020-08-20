@@ -44,6 +44,9 @@ export default class Scene {
         if(this.assets.length==0)
             throw new Error(`There are no assets in Scene: ${this.name}`)
         
+        for(var i in this.assets)
+            this.assets[i].set_context(this.ctx);
+
         this.__set_elapsed_time_and_font_if()
         
         this.__render(this.cur_frame)
