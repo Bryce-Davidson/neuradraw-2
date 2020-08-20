@@ -13,6 +13,7 @@ export default class Scene {
      * @param {Number} config.duration - The duration of the scene in miliseconds (1000 miliseconds = 1 second)
      * @param {Boolean} [config.show_frame_count] - Whether or not to show the frame count of the scene
      * @param {Boolean} [config.show_time] - Whether or not to show the time elapsed_time in the scene
+     * @returns Scene
      */
     constructor(ctx, name, config) {
         this.name = name;
@@ -36,6 +37,8 @@ export default class Scene {
     
     /**
      * Plays the scene for the specified number of miliseconds in config.duration
+     * 
+     * @returns undefined
      */
     play() {
         if(this.assets.length==0)
@@ -49,13 +52,18 @@ export default class Scene {
 
     /**
      * Stops the scene
+     * 
+     * @returns undefined
      */
     stop() {
         window.clearInterval(this.interval_id);
     }
 
     /**
+     * Draws all assets in this to this.ctx
+     * 
      * @param {Number} frame - The frame of the scene to render to this.ctx
+     * @returns undefined
      */
     __render(frame) {
         if(this.cur_frame == this.num_frames)
@@ -73,6 +81,8 @@ export default class Scene {
 
     /**
      * Clears all of the assets off of this.ctx
+     * 
+     * @returns undefined
      */
     __clear_scene() {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
@@ -82,6 +92,7 @@ export default class Scene {
      * Adds an AnimationController asset to the scene.
      * 
      * @param {AnimationController} asset - The drawing asset to be added to the scene
+     * @returns undefined
      */
     add_asset(asset) {
         if(asset.frameOut > this.num_frames) {
@@ -96,7 +107,21 @@ export default class Scene {
     }
 
     /**
+     * Adds any number of assets to the Scene
+     * 
+     * @param {AnimationController} args 
+     * @returns undefined
+     */
+    add_assets(args) {
+        for(var i=0; i < arguments.length; i++) {
+            this.add_asset(arguments[i])
+        }
+    }
+
+    /**
      * Checks if this.config.show_frame_count is true and renders this.num_frames to this.ctx
+     * 
+     * @returns undefined
      */
     __show_frames_if() {
         if(this.config.show_frame_count)
@@ -105,6 +130,8 @@ export default class Scene {
 
     /**
      * Checks if this.config.show_time is true and renders this.elapsed_time to this.ctx
+     * 
+     * @returns undefined
      */
     __show_time_if() {
         if(this.config.show_time) {
@@ -116,6 +143,8 @@ export default class Scene {
 
     /**
      * Sets the font for the frame count and time.
+     * 
+     * @returns undefined
      */
     __set_elapsed_time_and_font_if() {
         if(this.config.show_frame_count || this.config.show_time)

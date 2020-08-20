@@ -1,10 +1,8 @@
 import { ctx } from './Meta/canvas';
 import Scene from './Controllers/Scene';
 
-// import circle from './Assets/Primitives/Canvas/circle';
-import Circle from './Assets/Custom/Controlled/CircleControlled';
 
-// import DNN from './Assets/Custom/Basic/DNN-Basic';
+import Circle from './Assets/Custom/Controlled/CircleControlled';
 import DNN from './Assets/Custom/Controlled/DNNControlled';
 import { interpolateNumber, interpolateObject } from 'd3-interpolate';
 import { easeBounceOut, easeCubicInOut, easeQuadInOut, easePolyInOut } from 'd3-ease';
@@ -25,7 +23,6 @@ var d1 = new DNN("d1", 0, s1.num_frames, {
     weight_colors: 'black',
     weight_thicknesses: 0.1
 })
-
 
 d1.add_layer(3, "blue", "input", {})
 d1.add_layer(3, "green", "h_1", {})
