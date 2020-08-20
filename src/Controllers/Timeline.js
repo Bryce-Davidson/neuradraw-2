@@ -27,11 +27,12 @@ export default class Timeline {
     /**
      * Returns a frame from the timeline given an index.
      * 
-     * @param {Number} index - The index of the frame to get within the timeline
+     * @param {Number} frame - The current frame of the Scene.
      * @returns Object
      */
-    get_frame(index) {
-        return this.timeline[index-this.frame_in];
+    get_frame(frame) {
+        let index = frame-this.frame_in;
+        return this.timeline[index];
     }
 
     /**

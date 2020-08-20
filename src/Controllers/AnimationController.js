@@ -36,6 +36,9 @@ export default class AnimationController extends AssetController {
      * @returns undefined
      */
     render_frame(frame) {     
+
+        //  I have a funny feealing that render_frame is going to get very complicated
+
         if(frame >= this.timeline.frame_in && frame <= this.timeline.frame_out) {
             var cur_frame = this.timeline.get_frame(frame)
             this.draw(cur_frame);

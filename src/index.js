@@ -35,11 +35,22 @@ var c1 = new Circle('c1', 0, s1.num_frames, {
     radius: 45
 })
 
-c1.value_from_to({
-    config_key: "x",
+// c1.value_from_to({
+//     config_key: "x",
+//     easing: easeElasticOut.amplitude(1).period(0.9),
+//     from: c1.config.x,
+//     to: ctx.canvas.width-300,
+//     start_frame: 0,
+//     end_frame: Math.floor(s1.num_frames)
+// })
+c1.config_from_to({
+    x: c1.config.x,
+    y: 100
+},{
+    x: ctx.canvas.width-300,
+    y: 400
+}, {
     easing: easeElasticOut.amplitude(1).period(0.9),
-    from: c1.config.x,
-    to: ctx.canvas.width-300,
     start_frame: 0,
     end_frame: Math.floor(s1.num_frames)
 })

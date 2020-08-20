@@ -43,9 +43,6 @@ export default class Scene {
     play() {
         if(this.assets.length==0)
             throw new Error(`There are no assets in Scene: ${this.name}`)
-        
-        for(var i in this.assets)
-            this.assets[i].set_context(this.ctx);
 
         this.__set_elapsed_time_and_font_if()
         
@@ -106,6 +103,7 @@ export default class Scene {
                     less than or equal to ${this.name}.num_frames
                 `)
         }
+        asset.set_context(this.ctx);
         this.assets.push(asset);
     }
 
