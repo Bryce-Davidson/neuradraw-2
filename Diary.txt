@@ -1,7 +1,0 @@
-
-I'm not really a fan of having to define assets within index
-and not being able to 
-
-I've lost awarness as to why I have a default config and a config config??
-
-maybe there is some way that i can do interpolation without saving the object

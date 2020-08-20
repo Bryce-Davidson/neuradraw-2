@@ -1,6 +1,7 @@
+./Diary.txt
 node_modules
-Diary.txt
 dist
 examples.js
 playground.js
 webpack.playground.js
+.vscode
