@@ -1,6 +1,5 @@
 export default class Timeline {
     /** 
-     * Initializes a new class of Timeline.
      * 
      * @param {Number} frame_in - The start frame of the timeline.
      * @param {Number} frame_out - The end frame of the timeline.

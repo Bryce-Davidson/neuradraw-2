@@ -4,6 +4,7 @@ export default class AssetController {
      * 
      * @param {String} name - The name of the asset
      * @param {Object} default_config - The default drawing config
+     * @returns AssetController
      */
     constructor(name, default_config) {
         this.name = name;
