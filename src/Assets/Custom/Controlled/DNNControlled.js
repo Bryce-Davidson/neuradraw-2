@@ -1,6 +1,6 @@
 import { push, pop } from '../../../Controllers/Context/State';
-import circle from '../../Primitives/Canvas/Circle';
-import line from '../../Primitives/Canvas/Line';
+import circle from '../../Primitives/Canvas/circle';
+import line from '../../Primitives/Canvas/line';
 import fill from '../../../Controllers/Context/Cosmetic/fill';
 import stroke from '../../../Controllers/Context/Cosmetic/stroke';
 import stroke_weight from '../../../Controllers/Context/Cosmetic/stroke_weight';
@@ -26,14 +26,12 @@ export default class DNN extends AnimationController {
      */
     constructor(name, frameIn, frameOut, default_config) {
         super(name, frameIn, frameOut, default_config);
-    
         this.save({ layer_configs: [], edges: [] })
     }
 
     draw(new_config) {
         super.update(new_config);
 
-        // Errors
         if(this.state.layer_configs.length==0)
             throw new Error('Layer configs is empty, please add a layer using add_layer()');
 
@@ -76,17 +74,24 @@ export default class DNN extends AnimationController {
             const cur_layer = this.state.layer_configs[i];
             const layer_top = vertical_spacing*(cur_layer.size+Math.max(...sizes))/2 + y;
 
-            // TODO:
-                // Need to update the save function in asset controller to embrace new syntax
-                // find new syntax in asset controller file
-            this.state[cur_layer.name] = {}
-            this.state[cur_layer.name]["node_coords"] = []
+            this.save({
+                [cur_layer.name]: {
+                    node_coords: [] 
+                }
+            })
 
             for(var j=0; j < cur_layer.size; j++) {
                 let center_x = x + 1+diameter/2 + i*horizontal_spacing;
                 let center_y = layer_top - j*vertical_spacing;
 
-                this.state[cur_layer.name]["node_coords"].push([center_x, center_y])
+                this.save({
+                    [cur_layer.name]: {
+                        node_coords: [
+                            ...this.state[cur_layer.name].node_coords, 
+                            [center_x, center_y]
+                        ] 
+                    }
+                })
             }
         }
     }

@@ -4,24 +4,24 @@ import AnimationController from './AnimationController';
 
 export default class Scene {
     /**
+     * Initializes a new class of Scene.
      * 
      * @param {Object} ctx - The ctx for the scene to draw on
      * @param {String} name - The name of the scene
      * @param {Object} config - The config object for the scene
      * @param {Number} config.fps - The frames per second for the scene
      * @param {Number} config.duration - The duration of the scene in miliseconds (1000 miliseconds = 1 second)
-     * @param {Boolean} config.show_frame_count - Whether or not to show the frame count of the scene
-     * @param {Boolean} config.show_time - Whether or not to show the time elapsed in the scene
+     * @param {Boolean} [config.show_frame_count] - Whether or not to show the frame count of the scene
+     * @param {Boolean} [config.show_time] - Whether or not to show the time elapsed_time in the scene
      */
     constructor(ctx, name, config) {
         this.name = name;
         this.ctx = ctx;
+        
         this.config = config;
-
         this.config.fps = config.fps || 60;
         if(this.config.fps > 60)
             throw new Error(`Scene: ${this.name}, config.fps cannot be greater than 60.`)
-        
         this.config.show_frame_count = config.show_frame_count || false;
         this.config.show_time = config.show_time || false;
         
@@ -29,58 +29,58 @@ export default class Scene {
         this.assets = [];
         
         this.cur_frame = 0;
-        this.elapsed = 0;
+        this.elapsed_time = 0;
         this.interval_id;
         this.start_time;
     }
     
+    /**
+     * Plays the scene for the specified number of miliseconds in config.duration
+     */
     play() {
         if(this.assets.length==0)
             throw new Error(`There are no assets in Scene: ${this.name}`)
-        if(this.config.show_frame_count)
-            this.ctx.font = "30px Arial";
-        if(this.config.show_time)
-            this.start_time = new Date();
         
-
-        // TODO
-            // change this so render doesn't have to be called like this
-
+        this.__set_elapsed_time_and_font_if()
+        
         this.__render(this.cur_frame)
         this.interval_id = window.setInterval(()=> this.__render(this.cur_frame), 1000/this.config.fps)
     }
 
+    /**
+     * Stops the scene
+     */
     stop() {
         window.clearInterval(this.interval_id);
     }
 
+    /**
+     * @param {Number} frame - The frame of the scene to render to this.ctx
+     */
     __render(frame) {
         if(this.cur_frame == this.num_frames)
             this.stop();
-
-        
         this.__clear_scene();
 
-        // Going to have to add in z-index for frame for asset rendering order
-        for(var i in this.assets) {
+        for(var i in this.assets)
             this.assets[i].render_frame(frame);
-        }
-        if(this.config.show_frame_count)
-            this.ctx.fillText(`frame: ${this.cur_frame}`, this.ctx.canvas.width - 200, 50);
-        if(this.config.show_time) {
-            let frame_time = new Date();
-            this.elapsed = frame_time - this.start_time;
-            this.ctx.fillText(`time: ${(this.elapsed/1000).toFixed(3)}`, this.ctx.canvas.width - 200, 100);
-        }
-    
+
+        this.__show_frames_if();
+        this.__show_time_if();
+        
         this.cur_frame++;
     }
 
+    /**
+     * Clears all of the assets off of this.ctx
+     */
     __clear_scene() {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
     }
 
     /**
+     * Adds an AnimationController asset to the scene.
+     * 
      * @param {AnimationController} asset - The drawing asset to be added to the scene
      */
     add_asset(asset) {
@@ -93,5 +93,34 @@ export default class Scene {
                 `)
         }
         this.assets.push(asset);
+    }
+
+    /**
+     * Checks if this.config.show_frame_count is true and renders this.num_frames to this.ctx
+     */
+    __show_frames_if() {
+        if(this.config.show_frame_count)
+            this.ctx.fillText(`frame: ${this.cur_frame}`, this.ctx.canvas.width - 200, 50);
+    }
+
+    /**
+     * Checks if this.config.show_time is true and renders this.elapsed_time to this.ctx
+     */
+    __show_time_if() {
+        if(this.config.show_time) {
+            let frame_time = new Date();
+            this.elapsed_time = frame_time - this.start_time;
+            this.ctx.fillText(`time: ${(this.elapsed_time/1000).toFixed(3)}`, this.ctx.canvas.width - 200, 100);
+        }
+    }
+
+    /**
+     * Sets the font for the frame count and time.
+     */
+    __set_elapsed_time_and_font_if() {
+        if(this.config.show_frame_count || this.config.show_time)
+            this.ctx.font = "30px Arial";
+        if(this.config.show_time)
+            this.start_time = new Date();
     }
 }
