@@ -97,13 +97,13 @@ export default class AnimationController extends AssetController {
      */
     config_from_to(from, to, {easing, start_frame=this.frame_in, end_frame=this.frame_out}) {
         
-        if(start_frame < this.timeline.frame_in)
+        if(start_frame < this.frame_in)
             throw new Error(`
                 tween for ${this.name}.config is out of bounds.
                 start_frame needs to be >= ${this.timeline.frame_in}.
                 currently: ${start_frame}
                 `)
-        if(end_frame > this.timeline.frame_out)
+        if(end_frame > this.frame_out)
             throw new Error(`\n
                 tween for ${this.name}.config is out of bounds.
                 end_frame needs to be <= ${this.timeline.frame_out}.
@@ -119,7 +119,7 @@ export default class AnimationController extends AssetController {
         this.timeline.update_after(end_frame, to)
     }
 
-    link(other_asset, {self_key, other_key, start_frame, end_frame}) {
+    link(other_asset, {self_key, other_key, start_frame, end_frame, controller}) {
         if(start_frame < other_asset.frame_in)
             throw new Error(`
                 LINK tween for ${this.name}.${self_key} & ${other_asset.name}.${other_key}
@@ -138,12 +138,31 @@ export default class AnimationController extends AssetController {
         
         var other_value;
         for(var i=start_frame; i<end_frame; i++) {
-            // get the value from the other asset
             other_value = other_asset.timeline.get_frame(i)[other_key];
-            // update the timeline is this asset
+            if(controller)
+                other_value = controller(other_value)
             this.timeline.update_frame(i, {[self_key]: other_value})
         }
         this.timeline.update_after(end_frame, {[self_key]: other_value})   
+    }
+
+
+    config_map(other_asset, map_object, {start_frame, end_frame}) {
+        var map_keys = Object.keys(map_object);
+        for(var i=0; i < map_keys.length; i++) {
+
+            // check if controllers
+            var other_key = map_object[map_keys[i]].other_key || map_object[map_keys[i]];
+            var controller = map_object[map_keys[i]].controller;
+
+            this.link(other_asset, {
+                self_key: map_keys[i],
+                other_key,
+                start_frame,
+                end_frame,
+                controller
+            })
+        }
     }
 
     get frame_in() {

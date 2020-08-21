@@ -44,18 +44,28 @@ var c1 = new CircelControlled("c1", 1, s1.num_frames, {
     radius: 45
 })
 
-c1.value_from_to({
-    config_key: "radius",
-    easing: easeCubicInOut,
-    from: 20,
-    to: 45,
-    start_frame: d1.frame_in,
-    end_frame: d1.frame_out
-})
 
-c1.link(d1, {
-    self_key: "x",
-    other_key: "x",
+// c1.link(d1, {
+//     self_key: "x",
+//     other_key: "x",
+//     start_frame: d1.frame_in,
+//     end_frame: d1.frame_out
+// })
+// c1.link(d1, {
+//     self_key: "y",
+//     other_key: "x",
+//     start_frame: d1.frame_in,
+//     end_frame: d1.frame_out
+// })
+
+c1.config_map(d1, {
+    x: "x", 
+    radius: {
+        other_key: "x",
+        controller: other => other/3
+    },
+    y: "x"
+}, {
     start_frame: d1.frame_in,
     end_frame: d1.frame_out
 })
