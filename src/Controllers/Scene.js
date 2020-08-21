@@ -46,8 +46,7 @@ export default class Scene {
 
         this.__set_elapsed_time_and_font_if()
         
-        this.__render(this.cur_frame)
-        this.interval_id = window.setInterval(()=> this.__render(this.cur_frame), 1000/this.config.fps)
+        this.interval_id = window.setInterval(()=> this.__render(), 1000/this.config.fps)
     }
 
     /**
@@ -65,18 +64,17 @@ export default class Scene {
      * @param {Number} frame - The frame of the scene to render to this.ctx
      * @returns undefined
      */
-    __render(frame) {
+    __render() {
+        this.cur_frame++;
         if(this.cur_frame == this.num_frames)
             this.stop();
         this.__clear_scene();
-
+        
         for(var i in this.assets)
-            this.assets[i].render_frame(frame);
-
+        this.assets[i].render_frame(this.cur_frame);
+        
         this.__show_frames_if();
         this.__show_time_if();
-        
-        this.cur_frame++;
     }
 
     /**

@@ -6,7 +6,8 @@ export default class Timeline {
      * @returns Timeline
      */
     constructor(frame_in, frame_out) {
-        this.timeline = new Array(frame_out-frame_in);
+        // We need the plus one because 3-2 = 1 but it is in for 2 frames
+        this.timeline = new Array(frame_out-frame_in+1);
         this.frame_in = frame_in;
         this.frame_out = frame_out;
     }
@@ -38,34 +39,34 @@ export default class Timeline {
     /**
      * Replaces or adds a frame at an index.
      * 
-     * @param {Number} index - The index for the frame to be replaced or added in timeline
+     * @param {Number} frame - The frame to be replaced or added in the timeline
      * @param {Object} source - The frame to be added to the timeline
      * @returns undefined
      */
-    add_frame(index, source) {
-        this.timeline[index] = source;
+    add_frame(frame, source) {
+        this.timeline[frame-1] = source;
     }
 
     /**
      * Updates a frame at a specified index within the timeline.
      * 
-     * @param {Number} index - The index of the frame to be updated in the timeline
+     * @param {Number} frame - The frame to be updated in the timeline
      * @param {Object} source - The update to the frame within the timeline
      * @returns undefined
      */
-    update_frame(index, source) {
-        Object.assign(this.timeline[index], source)
+    update_frame(frame, source) {
+        Object.assign(this.timeline[frame-1], source)
     }
 
     /**
      * Updates every frame in the timeline after an index to the end.
      * 
-     * @param {Number} index - The index to start 
+     * @param {Number} frame - The frame to start 
      * @param {Object} source - The update
      * @returns undefined
      */
-    update_after(index, source) {
-        for(var i=index; i < this.timeline.length; i++) {
+    update_after(frame, source) {
+        for(var i=frame-1; i < this.timeline.length; i++) {
             Object.assign(this.timeline[i], source)
         }
     }

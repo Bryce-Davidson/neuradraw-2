@@ -10,7 +10,7 @@ export default class AssetController {
         if(!name)
             throw new Error('Please provide a name for the asset.')
         this.name = name;
-        this.config = default_config;
+        this.config = {...default_config};
         this.default = default_config;
         this.state = {};
         this.state.num_draws = 0;
@@ -28,14 +28,15 @@ export default class AssetController {
     }
 
     update(new_config) {
-        if(typeof this.compute === "function" && this.state.num_draws==0)
-            this.compute(Object.keys(this.config));
+        // if(typeof this.compute === "function" && this.state.num_draws==0)
+            // this.compute(Object.keys(this.config));
 
         if(new_config) {
             if(!isEqual(this.config, new_config)) {
-                if(typeof this.compute === "function")
-                    this.compute(this.get_compute_keys(new_config));
+                var old_config = {...this.config};
                 this.update_config(new_config);
+                if(typeof this.compute === "function")
+                    this.compute(this.get_compute_keys(new_config, old_config));
             }
         }
         this.state.num_draws++;
@@ -65,11 +66,11 @@ export default class AssetController {
      * @param {Object} new_config - The new configuration object
      * @returns {Array} 
      */
-    get_compute_keys(new_config) {
+    get_compute_keys(new_config, old_config) {
         var compute_keys = [];
         const keys = Object.keys(new_config);
         for(var i=0; i < keys.length; i++)
-            if(!isEqual(new_config[keys[i]], this.config[keys[i]]))
+            if(!isEqual(new_config[keys[i]], old_config[keys[i]]))
                 compute_keys.push(keys[i]);
         return compute_keys;
     }

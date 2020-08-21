@@ -6,17 +6,21 @@ import { easeLinear } from 'd3-ease';
 export default class AnimationController extends AssetController {
     /**
      * @param {String} name - The name of the asset
-     * @param {Number} frame_in - The frame to begin drawing on a scene
+     * @param {Number} frame_in - The frame to begin drawing on a scene | frame_in >= 1
      * @param {Number} frame_out - The frame to stop drawing on a scene
      * @param {Object} default_config - The default drawing configuration for the asset
      * @returns AnimationController
      */
     constructor(name, frame_in, frame_out, default_config) {
         super(name, default_config);
+
+        if(frame_in<1)
+            throw new Error(`${this.name}'s frame_in value is < 1. ${this.name}'s frame_in needs to be >= 1`)
+
         if(frame_in==undefined || frame_out==undefined)
             throw new Error(`Please provide a frame_in AND a frame_out for \"${name}\"`);
         this.timeline = new Timeline(frame_in, frame_out);
-        this.timeline.init(this.default_config)
+        this.timeline.init(this.default)
     }
 
     /**
@@ -35,10 +39,7 @@ export default class AnimationController extends AssetController {
      * @param {Number} frame - The frame to render.
      * @returns undefined
      */
-    render_frame(frame) {     
-
-        //  I have a funny feealing that render_frame is going to get very complicated
-
+    render_frame(frame) {
         if(frame >= this.timeline.frame_in && frame <= this.timeline.frame_out) {
             var cur_frame = this.timeline.get_frame(frame)
             this.draw(cur_frame);
@@ -59,15 +60,15 @@ export default class AnimationController extends AssetController {
      */
     value_from_to({config_key, easing=easeLinear, from, to, start_frame=this.frame_in, end_frame=this.frame_out}) {
         
-        if(start_frame < this.frame_in)
+        if(start_frame < this.timeline.frame_in)
             throw new Error(`
                 tween for ${this.name}.${config_key} is out of bounds.
-                start_frame needs to be <= ${this.start_frame}
+                start_frame needs to be >= ${this.timeline.frame_in}
                 `)
-        if(end_frame > this.frame_out)
+        if(end_frame > this.timeline.frame_out)
             throw new Error(`\n
                 tween for ${this.name}.${config_key} is out of bounds.
-                end_frame needs to be <= ${this.frame_out}
+                end_frame needs to be <= ${this.timeline.frame_out}
                 `)
         
         var tween = interpolate(from, to)
@@ -92,15 +93,15 @@ export default class AnimationController extends AssetController {
      */
     config_from_to(from, to, {easing, start_frame=this.frame_in, end_frame=this.frame_out}) {
         
-        if(start_frame < this.frame_in)
+        if(start_frame < this.timeline.frame_in)
             throw new Error(`
                 tween for ${this.name}.config is out of bounds.
-                start_frame needs to be <= ${this.start_frame}
+                start_frame needs to be >= ${this.timeline.frame_in}
                 `)
-        if(end_frame > this.frame_out)
+        if(end_frame > this.timeline.frame_out)
             throw new Error(`\n
                 tween for ${this.name}.config is out of bounds.
-                end_frame needs to be <= ${this.frame_out}
+                end_frame needs to be <= ${this.timeline.frame_out}
                 `)
         
         var tween = interpolate(from, to)

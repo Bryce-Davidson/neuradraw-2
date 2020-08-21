@@ -41,7 +41,6 @@ export default class DNN extends AnimationController {
     }
 
     compute(compute_keys) {
-        // Just need to write out what you wan't to compute etc
         if(includes_any(compute_keys, ["x", "y", "layer_spacing", "node_spacing", "diameter"])) {
             this.__compute_node_coordinates();
             this.__compute_edge_coordinates();
