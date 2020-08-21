@@ -119,10 +119,19 @@ export default class AnimationController extends AssetController {
         this.timeline.update_after(end_frame, to)
     }
 
+
     link(other_asset, {self_key, other_key, start_frame, end_frame, controller}) {
+
+        TODO:
+        // [] other asset doesn't exist
+        // [] other key doesn't exist
+        // [] self_key doesn't exist
+        // [] controller isn't valid function
+
+
         if(start_frame < other_asset.frame_in)
             throw new Error(`
-                LINK tween for ${this.name}.${self_key} & ${other_asset.name}.${other_key}
+                LINK for ${this.name}.${self_key} & ${other_asset.name}.${other_key}
                 is out of bounds.
                 start_frame needs to be >= ${other_asset.frame_in}.
                 currently: ${start_frame}
@@ -130,7 +139,7 @@ export default class AnimationController extends AssetController {
         
         if(end_frame > this.timeline.frame_out)
             throw new Error(`
-                LINK tween for ${this.name}.${self_key} & ${other_asset.name}.${other_key}
+                LINK for ${this.name}.${self_key} & ${other_asset.name}.${other_key}
                 is out of bounds.
                 end_frame needs to be <= ${other_asset.frame_out}.
                 currently: ${end_frame}
@@ -163,6 +172,10 @@ export default class AnimationController extends AssetController {
                 controller
             })
         }
+    }
+
+    follow() {
+        // for an asset to follow a path
     }
 
     get frame_in() {
