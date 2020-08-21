@@ -2,6 +2,7 @@ import AssetController from './AssetController';
 import Timeline from './Timeline';
 import { interpolate } from 'd3-interpolate';
 import { easeLinear } from 'd3-ease';
+import TweenError from '../Utility/Errors/TweenError';
 
 export default class AnimationController extends AssetController {
     /**
@@ -98,13 +99,13 @@ export default class AnimationController extends AssetController {
     config_from_to(from, to, {easing, start_frame=this.frame_in, end_frame=this.frame_out}) {
         
         if(start_frame < this.frame_in)
-            throw new Error(`
+            throw new TweenError(`
                 tween for ${this.name}.config is out of bounds.
                 start_frame needs to be >= ${this.timeline.frame_in}.
                 currently: ${start_frame}
                 `)
         if(end_frame > this.frame_out)
-            throw new Error(`\n
+            throw new TweenError(`\n
                 tween for ${this.name}.config is out of bounds.
                 end_frame needs to be <= ${this.timeline.frame_out}.
                 currently: ${end_frame}
@@ -122,15 +123,17 @@ export default class AnimationController extends AssetController {
 
     link(other_asset, {self_key, other_key, start_frame, end_frame, controller}) {
 
+        // if(!other_asset instanceof AnimationController)
+        //     throw new TypeError();
+
         TODO:
         // [] other asset doesn't exist
         // [] other key doesn't exist
         // [] self_key doesn't exist
         // [] controller isn't valid function
 
-
         if(start_frame < other_asset.frame_in)
-            throw new Error(`
+            throw new TweenError(`
                 LINK for ${this.name}.${self_key} & ${other_asset.name}.${other_key}
                 is out of bounds.
                 start_frame needs to be >= ${other_asset.frame_in}.
@@ -138,7 +141,7 @@ export default class AnimationController extends AssetController {
             `)
         
         if(end_frame > this.timeline.frame_out)
-            throw new Error(`
+            throw new TweenError(`
                 LINK for ${this.name}.${self_key} & ${other_asset.name}.${other_key}
                 is out of bounds.
                 end_frame needs to be <= ${other_asset.frame_out}.
@@ -156,14 +159,14 @@ export default class AnimationController extends AssetController {
     }
 
 
-    config_map(other_asset, map_object, {start_frame, end_frame}) {
+    config_map(other_asset, map_object, {start_frame, end_frame}) {    
         var map_keys = Object.keys(map_object);
         for(var i=0; i < map_keys.length; i++) {
 
-            // check if controllers
             var other_key = map_object[map_keys[i]].other_key || map_object[map_keys[i]];
             var controller = map_object[map_keys[i]].controller;
 
+            // Link each key with the controller
             this.link(other_asset, {
                 self_key: map_keys[i],
                 other_key,
@@ -174,8 +177,10 @@ export default class AnimationController extends AssetController {
         }
     }
 
-    follow() {
-        // for an asset to follow a path
+    follow(path) {
+        if(this.config.x==undefined || this.config.y==undefined)
+            throw new TweenError(`Asset ${this.name} does not have xy coordinates`)
+        
     }
 
     get frame_in() {

@@ -6,6 +6,8 @@ import Circle from './Assets/Custom/Controlled/CircleControlled';
 import DNN from './Assets/Custom/Controlled/DNNControlled';
 import { easeCubicInOut, easeLinear } from 'd3-ease';
 import CircelControlled from './Assets/Custom/Controlled/CircleControlled';
+import AnimationController from './Controllers/AnimationController';
+
 
 var s1 = new Scene(ctx, "s1", {
     duration:1000, 
@@ -29,6 +31,7 @@ d1.add_layer(3, "green", "h_1", {})
 d1.add_layer(5, "purple", "h_2", {})
 d1.add_layer(2, "red", "output", {})
 
+
 d1.value_from_to({
     config_key: "x",
     easing: easeCubicInOut,
@@ -43,7 +46,6 @@ var c1 = new CircelControlled("c1", 1, s1.num_frames, {
     y: 100,
     radius: 45
 })
-
 
 // c1.link(d1, {
 //     self_key: "x",

@@ -71,7 +71,7 @@ export default class Scene {
         this.__clear_scene();
         
         for(var i in this.assets)
-        this.assets[i].render_frame(this.cur_frame);
+            this.assets[i].render_frame(this.cur_frame);
         
         this.__show_frames_if();
         this.__show_time_if();
