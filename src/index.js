@@ -10,7 +10,7 @@ import CircelControlled from './Assets/Custom/Controlled/CircleControlled';
 var s1 = new Scene(ctx, "s1", {
     duration:1000, 
     show_frame_count: true,
-    fps: 3,
+    fps: 60,
     show_time: true
 })
 
@@ -35,13 +35,29 @@ d1.value_from_to({
     from: 0,
     to: 800,
     start_frame: 1,
-    end_frame: 3
+    end_frame: d1.frame_out
 })
 
 var c1 = new CircelControlled("c1", 1, s1.num_frames, {
     x: 100,
     y: 100,
     radius: 45
+})
+
+c1.value_from_to({
+    config_key: "radius",
+    easing: easeCubicInOut,
+    from: 20,
+    to: 45,
+    start_frame: d1.frame_in,
+    end_frame: d1.frame_out
+})
+
+c1.link(d1, {
+    self_key: "x",
+    other_key: "x",
+    start_frame: d1.frame_in,
+    end_frame: d1.frame_out
 })
 
 s1.add_assets(d1, c1)

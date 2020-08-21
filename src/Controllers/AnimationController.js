@@ -30,6 +30,8 @@ export default class AnimationController extends AssetController {
      * @returns A frame from the assets timeline
      */
     get_frame(frame) {
+        if(frame<1)
+            throw new Error(`frame must be > 0 currently ${frame}`)
         return this.timeline.get_frame(frame);
     }
 
@@ -115,5 +117,40 @@ export default class AnimationController extends AssetController {
             this.timeline.update_frame(i, tween_value)
         }
         this.timeline.update_after(end_frame, to)
+    }
+
+    link(other_asset, {self_key, other_key, start_frame, end_frame}) {
+        if(start_frame < other_asset.frame_in)
+            throw new Error(`
+                LINK tween for ${this.name}.${self_key} & ${other_asset.name}.${other_key}
+                is out of bounds.
+                start_frame needs to be >= ${other_asset.frame_in}.
+                currently: ${start_frame}
+            `)
+        
+        if(end_frame > this.timeline.frame_out)
+            throw new Error(`
+                LINK tween for ${this.name}.${self_key} & ${other_asset.name}.${other_key}
+                is out of bounds.
+                end_frame needs to be <= ${other_asset.frame_out}.
+                currently: ${end_frame}
+            `)
+        
+        var other_value;
+        for(var i=start_frame; i<end_frame; i++) {
+            // get the value from the other asset
+            other_value = other_asset.timeline.get_frame(i)[other_key];
+            // update the timeline is this asset
+            this.timeline.update_frame(i, {[self_key]: other_value})
+        }
+        this.timeline.update_after(end_frame, {[self_key]: other_value})   
+    }
+
+    get frame_in() {
+        return this.timeline.frame_in;
+    }
+
+    get frame_out() {
+        return this.timeline.frame_out;
     }
 }
