@@ -15,7 +15,7 @@ export default class AnimationController extends AssetController {
         super(name, default_config);
 
         if(frame_in<1)
-            throw new Error(`${this.name}'s frame_in value is < 1. ${this.name}'s frame_in needs to be >= 1`)
+            throw new Error(`Asset ${this.name}'s frame_in is < 1. ${this.name}'s frame_in needs to be >= 1`)
 
         if(frame_in==undefined || frame_out==undefined)
             throw new Error(`Please provide a frame_in AND a frame_out for \"${name}\"`);
@@ -63,12 +63,14 @@ export default class AnimationController extends AssetController {
         if(start_frame < this.timeline.frame_in)
             throw new Error(`
                 tween for ${this.name}.${config_key} is out of bounds.
-                start_frame needs to be >= ${this.timeline.frame_in}
+                start_frame needs to be >= ${this.timeline.frame_in}.
+                currently: ${start_frame}
                 `)
         if(end_frame > this.timeline.frame_out)
             throw new Error(`\n
                 tween for ${this.name}.${config_key} is out of bounds.
                 end_frame needs to be <= ${this.timeline.frame_out}
+                currently: ${end_frame}
                 `)
         
         var tween = interpolate(from, to)
@@ -96,12 +98,14 @@ export default class AnimationController extends AssetController {
         if(start_frame < this.timeline.frame_in)
             throw new Error(`
                 tween for ${this.name}.config is out of bounds.
-                start_frame needs to be >= ${this.timeline.frame_in}
+                start_frame needs to be >= ${this.timeline.frame_in}.
+                currently: ${start_frame}
                 `)
         if(end_frame > this.timeline.frame_out)
             throw new Error(`\n
                 tween for ${this.name}.config is out of bounds.
-                end_frame needs to be <= ${this.timeline.frame_out}
+                end_frame needs to be <= ${this.timeline.frame_out}.
+                currently: ${end_frame}
                 `)
         
         var tween = interpolate(from, to)

@@ -28,9 +28,6 @@ export default class AssetController {
     }
 
     update(new_config) {
-        // if(typeof this.compute === "function" && this.state.num_draws==0)
-            // this.compute(Object.keys(this.config));
-
         if(new_config) {
             if(!isEqual(this.config, new_config)) {
                 var old_config = {...this.config};
