@@ -1,4 +1,4 @@
-DEAD:
+# Dead
     Ended up deciding that I needed to transfer everything to SVG instead of pure canvas. Ended up finding much more documentation on SVG than canvas and libraries for complex functionality.
 
 Neuradraw-2 is a developper facing drawing paradigm with a customizable API and guided asset creation process.
