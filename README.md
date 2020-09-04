@@ -14,11 +14,11 @@ The next version of neuradraw will be written in [typescript](https://www.typesc
 
 ---
 
+# Overview
+
 Neuradraw-2 is a developper facing drawing paradigm with a customizable API and guided asset creation process.
 
-The point of neuradraw-2 is to be able to define your own custom assets and expose the abstracted drawing configurations to that asset in order for neuradraw to take control.
-
-Neuradraw focuses on developper defined assets and follows a strict creation process on which there are many examples but follow the 4 main functions of:
+Neuradraw focuses on mainly on these developper defined assets and follows a strict creation process on which there are many examples but follow the 4 main functions of:
 
 ```javascript
 compute();
@@ -27,12 +27,8 @@ _draw_function();
 __compute_function();
 ```
 
-You can create your own custom asset from scratch and extend one of the many contrllers to get it up and running
-
-state is readable as an object but should be saved with the function
-
 ```javascript
-// A simple basic contrlled asset
+// A simple basic constrolled asset
 
 import AssetController from 'neuradraw-2';
 
