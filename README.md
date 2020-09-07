@@ -1,13 +1,12 @@
 # Neuradraw-2
 
-
+A simple drawing paradigm and guided asset creation for mathematical animations and images.
 
 # Table of Contents
 
 - [Neuradraw-2](#neuradraw-2)
-- [Table of Contents](#table-of-contents)
-- [Summary](#summary)
-  - [Discontinued Reasons](#discontinued-reasons)
+  - [Project Summary](#summary)
+- [Discontinued Reasons](#discontinued-reasons)
 - [Installation](#installation)
 - [Overview](#overview)
 - [Drawing Paradigm](#drawing-paradigm)
@@ -22,7 +21,7 @@
   - [Timeline](#timeline)
 - [Asset Animation](#asset-animation)
 
-# Summary
+## Summary
 
 Neuradraw came from the desire to be able to draw complex neural network architectures with a variety of different colors and annotations. The project's conception is based in the `neuradraw` repository but continues on these different flavors and versions. Those flavors and versions are:
 
@@ -30,7 +29,7 @@ Neuradraw came from the desire to be able to draw complex neural network archite
 
 The reasons for moving on to developing on a different code base and paradigm are included below in the discontinued section.
 
-## Discontinued Reasons
+# Discontinued Reasons
 
 Decided that drawing on the canvas did not include many of the features in the project’s intended goals and features. While fast, the canvas object does not include an easy interface for morphing and interpolating canvas path’s as well as the lack of canvas documentation and packages to aid with the development. 
 
