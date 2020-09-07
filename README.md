@@ -2,7 +2,7 @@
 
 Neuradraw came from the desire to be able to draw complex neural network architectures with a variety of different colors and annotations. The project's conception is based in the `neuradraw` repository but continues on these different flavors and versions. Those flavors and versions are:
 
-[`Neuradraw-2`](https://github.com/Bryce-Davidson/neuradraw-2), [`Neuradraw-ts`](https://github.com/Bryce-Davidson/neuradraw-ts) & the original [`Neuradraw`](https://github.com/Bryce-Davidson/neuradraw)
+[`Neuradraw-node`](https://github.com/Bryce-Davidson/neuradraw-node), [`Neuradraw-ts`](https://github.com/Bryce-Davidson/neuradraw-ts) & the original [`Neuradraw`](https://github.com/Bryce-Davidson/neuradraw)
 
 The reasons for moving on to developing on a different code base and paradigm are included below in the discontinued section.
 
