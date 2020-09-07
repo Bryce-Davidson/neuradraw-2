@@ -2,7 +2,7 @@
 
 A simple drawing paradigm and guided asset creation for mathematical animations and images.
 
-## Project Summary
+## Summary
 
 Neuradraw came from the desire to be able to draw complex neural network architectures with a variety of different colors and annotations. The project's conception is based in the `neuradraw` repository but continues on these different flavors and versions. Those flavors and versions are:
 
@@ -20,11 +20,11 @@ The next version of neuradraw will be written in [typescript](https://www.typesc
 # Table of Contents
 
 - [Neuradraw-2](#neuradraw-2)
-  - [Project Summary](#project-summary)
+  - [Summary](#summary)
 - [Discontinued Reasons](#discontinued-reasons)
 - [Table of Contents](#table-of-contents)
-- [Installation](#installation)
 - [Overview](#overview)
+- [Installation](#installation)
 - [Drawing Paradigm](#drawing-paradigm)
 - [Drawing Example](#drawing-example)
 - [Guided Asset Creation](#guided-asset-creation)
@@ -37,16 +37,15 @@ The next version of neuradraw will be written in [typescript](https://www.typesc
   - [Timeline](#timeline)
 - [Asset Animation](#asset-animation)
 
-# Installation
-
 # Overview
 
 Neuradraw-2 is a developper facing drawing paradigm with a customizable API and guided asset creation process.
 
 
-Neuradraw-2 focuses on giving developers the ability to design and define their own assets and extend one of the AssetControllers in order to give thier assets easy to use animation controls.
+Neuradraw-2 focuses on giving developers the ability to design and define their own assets and extend one of the AssetControllers to give thier assets easy to use animation controls.
 
-Through the asset creation process
+Through the asset creation process the developper will define simple functions included within thier asset class for Neuradraw to call.
+
 
 ```javascript
 compute();
@@ -54,7 +53,9 @@ draw();
 _draw_function();
 __compute_function();
 ```
+Examples can be seen below.
 
+# Installation
 # Drawing Paradigm
 # Drawing Example
 # Guided Asset Creation
