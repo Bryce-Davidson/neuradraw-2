@@ -14,16 +14,12 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            // The title of the html file
             title: "Development",
-            // template for the html
-            template: "./html.template"
+            template: "./template.html"
         })
     ],
     output: {
-        // the file name we bundle into
         filename: "[name].bundle.js",
-        // the directory we bundle into
         path: path.resolve(__dirname, "dist")
     },
 }
