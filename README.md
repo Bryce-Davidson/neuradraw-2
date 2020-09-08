@@ -1,6 +1,6 @@
 # Neuradraw-2
 
-A simple drawing paradigm and guided asset creation for mathematical animations and images.
+A simple drawing paradigm with guided asset creation for mathematical animations and images.
 
 ## Summary
 
@@ -25,7 +25,6 @@ The next version of neuradraw will be written in [typescript](https://www.typesc
 - [Table of Contents](#table-of-contents)
 - [Overview](#overview)
 - [Installation](#installation)
-- [Drawing Paradigm](#drawing-paradigm)
 - [Drawing Example](#drawing-example)
 - [Guided Asset Creation](#guided-asset-creation)
   - [Draw Lifecycle Methods](#draw-lifecycle-methods)
@@ -39,12 +38,12 @@ The next version of neuradraw will be written in [typescript](https://www.typesc
 
 # Overview
 
-Neuradraw-2 is a developper facing drawing paradigm with a customizable API and guided asset creation process.
+Neuradraw-2 is a developer facing drawing paradigm with a customizable API and guided asset creation.
 
 
 Neuradraw-2 focuses on giving developers the ability to design and define their own assets and extend one of the AssetControllers to give thier assets easy to use animation controls.
 
-Through the asset creation process the developper will define simple functions included within thier asset class for Neuradraw to call.
+Through the asset creation process the developper will define simple functions included within thier asset class such as:
 
 
 ```javascript
@@ -56,8 +55,17 @@ __compute_function();
 Examples can be seen below.
 
 # Installation
-# Drawing Paradigm
+
+To install `Neuradraw-2` run the command:
+
+`git clone https://github.com/Bryce-Davidson/neuradraw-2`
+
+And then run `npm install`
+
 # Drawing Example
+
+Inside `index.js`
+
 # Guided Asset Creation
 ## Draw Lifecycle Methods
 ## Primitive Shapes

@@ -33,6 +33,8 @@ export default class AssetController {
                 var old_config = {...this.config};
                 this.update_config(new_config);
                 if(typeof this.compute === "function")
+                    this.compute(Object.keys(this.default));
+                else if(typeof this.compute === "function")
                     this.compute(this.get_compute_keys(new_config, old_config));
             }
         }
