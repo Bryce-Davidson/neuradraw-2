@@ -28,22 +28,31 @@ d1.add_layer(3, "green", "h_1", {})
 d1.add_layer(5, "purple", "h_2", {})
 d1.add_layer(2, "red", "output", {})
 
-console.log(d1.default)
-
-d1.config_from_to(d1.default, {
-    x: 800,
-    y: 300,
-    weight_colors: 'blue'
-}, {
-    easing: easeCubicInOut,
-    start_frame: 1,
-    end_frame: d1.frame_out  
-})
-
 var c1 = new CircelControlled("c1", 1, s1.num_frames, {
     x: 100,
     y: 100,
     radius: 45
+})
+
+
+d1.config_from_to(d1.default, {
+    x: 800,
+    y: -120,
+    node_spacing: 100,
+    weight_colors: 'blue'
+}, {
+    easing: easeCubicInOut,
+    start_frame: 1,
+    end_frame: Math.floor(d1.frame_out/2)
+})
+
+d1.value_from_to({
+    config_key: "x",
+    from: 800,
+    to: 40,
+    easing: easeCubicInOut,
+    start_frame: Math.floor(d1.frame_out/2),
+    end_frame: d1.frame_out
 })
 
 c1.config_map(d1, {
@@ -58,6 +67,15 @@ c1.config_map(d1, {
     }
 }, {
     start_frame: d1.frame_in,
+    end_frame: Math.floor(d1.frame_out/2)
+})
+
+c1.value_from_to({
+    config_key: "radius",
+    from: c1.get_frame(Math.floor(d1.frame_out/2)).radius,
+    to: 150,
+    easing: easeCubicInOut,
+    start_frame: Math.floor(d1.frame_out/2),
     end_frame: d1.frame_out
 })
 

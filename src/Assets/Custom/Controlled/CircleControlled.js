@@ -12,12 +12,7 @@ export default class CircelControlled extends AnimationController {
      * @param {Object} default_config.y - The y value of the center of the circle
      * @param {Object} default_config.radius - The radius value fo the circle
      */
-    constructor(name, frameIn, frameOut, default_config={
-        x:100,
-        y:100,
-        radius: 45
-    }) 
-    {
+    constructor(name, frameIn, frameOut, default_config) {
         super(name, frameIn, frameOut, default_config)
     }
 
