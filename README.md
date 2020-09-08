@@ -64,8 +64,6 @@ And then run `npm install`
 
 # Drawing Example
 
-![DNN Animation](public/example_1.gif)
-
 <details>
   <summary>Inside <code>index.js</code></summary>
   
@@ -154,6 +152,11 @@ And then run `npm install`
     s1.play();
 
   ```
+</details>
+
+<details>
+  <summary>.gif</summary>
+  <img src="./public/example_1.gif">
 </details>
 
 # Guided Asset Creation
