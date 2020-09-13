@@ -1,6 +1,6 @@
 import { push, pop } from '../../../Controllers/Context/State';
-import circle from '../../Primitives/Canvas/circle';
-import line from '../../Primitives/Canvas/line';
+import circle from '../../Primitives/Circle';
+import line from '../../Primitives/Line';
 import fill from '../../../Controllers/Context/Cosmetic/fill';
 import stroke from '../../../Controllers/Context/Cosmetic/stroke';
 import stroke_weight from '../../../Controllers/Context/Cosmetic/stroke_weight';

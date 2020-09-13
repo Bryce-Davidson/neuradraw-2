@@ -1,4 +1,4 @@
-import circle from '../../Primitives/Canvas/circle';
+import circle from '../../Primitives/Circle';
 import AnimationController from '../../../Controllers/AnimationController';
 
 export default class CircelControlled extends AnimationController {

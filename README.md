@@ -154,10 +154,7 @@ And then run `npm install`
   ```
 </details>
 
-<details>
-  <summary>.gif</summary>
-  <img src="./public/example_1.gif">
-</details>
+<img src="./public/example_1.gif">
 
 # Guided Asset Creation
 ## Draw Lifecycle Methods
