@@ -63,11 +63,7 @@ To install `Neuradraw-2` run the command:
 And then run `npm install`
 
 # Drawing Example
-
-<details>
-  <summary>Inside <code>index.js</code></summary>
-  
-  ```javascript
+```javascript
     import { ctx } from './Meta/canvas';
     import Scene from './Controllers/Scene';
 
@@ -152,7 +148,6 @@ And then run `npm install`
     s1.play();
 
   ```
-</details>
 
 <img src="./public/example_1.gif">
 
