@@ -1,3 +1,5 @@
+<img src="./public/example_1.gif">
+
 # Neuradraw-2
 
 A simple drawing paradigm with guided asset creation for mathematical animations and images.
@@ -148,15 +150,3 @@ And then run `npm install`
     s1.play();
 
   ```
-
-<img src="./public/example_1.gif">
-
-# Guided Asset Creation
-## Draw Lifecycle Methods
-## Primitive Shapes
-# Asset Controllers
-## Asset Controller
-## Animation Controller
-## Scene
-## Timeline
-# Asset Animation
